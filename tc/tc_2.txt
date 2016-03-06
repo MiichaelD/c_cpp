@@ -1,0 +1,137 @@
+//meetingwords.com/aeJvu0VilT
+
+//Complete class definition for singleton
+class MySingleton{
+
+	private:
+    static MySingleton mInstance;
+	
+    //Prevent copy constructor (default implemented in C++)
+	MySingleton(const SymbolIndexer& that);
+	
+	//Prevent no-parameters constructor 
+    MySingleton(){}
+	
+	//override the asignment operator
+    
+    public:
+    static public MySingleton getInstance(){
+            if(mInstance == NULL){
+                mInstance = new MySingleton();
+            }
+            return mInstance;
+        }
+};
+
+==========================================
+
+//rage car
+bool checkPalindrome(const std::string& str) {
+    int len = strlen(str);
+    for(int i =0, j = len-1;i<j;i++, j--){
+        while(str[i] == ' '){
+            i++;
+        }
+        while(str[j] == ' '){
+            j--;
+        }
+        if(str[i] != str[j]){
+            return false;
+        }    
+    }
+    return true;
+} 
+
+=========================================
+
+class Node {
+  int val;
+  Node* next;
+};
+
+//Reverse linked list, return new head - Define next function:
+Node* reverse(Node* head) {
+    Node* aux2 = head;
+    Node* newHead = head;
+    
+    while( aux2->next != NULL){
+        Node* aux = aux2->next;
+        aux2->next = aux->next;
+        aux->next = newHead;
+        newHead = aux;
+    }
+    return newHead;
+}
+           |                      ||
+NULL A <- B <- C <- D -> NULL
+          A -------------------->
+
+==========================================
+
+class Rock {
+    private:
+        Point position;
+        float radius;
+    public:
+        Rock();
+        bool collidesWith(const Point& pos);
+};
+
+vector<Rock> m_rocks;
+
+bool isSafe(const Point& pos) {
+    for(auto rock: m_rocks) {
+        if(rock.collidesWith(pos))
+            return false;
+    }
+    return true;
+}
+
+//The idea was to use buckets to check in wich the rocks fall and then  have a minor amount of rocks to check
+//but this was not concrete because more information was required, like the max radius a rock could have
+
+-----------------------------------------------------------------------------------
+
+                    x
+x------|                          x                      x                          x
+    x---------------------------------------------------------------------|
+                                      x-----------------------------|
+                                                             o
+                 x
+
+          x                                                    x
+
+
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

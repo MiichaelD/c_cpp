@@ -1,0 +1,7 @@
+Ejecutar primero consumidor:
+
+   ./shared_mem1 &
+
+ejecutar posteriormente el productor:
+
+   ./shared_mem2

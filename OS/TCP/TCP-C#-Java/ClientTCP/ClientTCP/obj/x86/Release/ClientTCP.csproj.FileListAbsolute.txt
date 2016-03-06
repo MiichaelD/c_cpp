@@ -1,0 +1,5 @@
+c:\users\skeleton\documents\visual studio 2010\Projects\ClientTCP\ClientTCP\bin\Release\ClientTCP.exe
+c:\users\skeleton\documents\visual studio 2010\Projects\ClientTCP\ClientTCP\bin\Release\ClientTCP.pdb
+c:\users\skeleton\documents\visual studio 2010\Projects\ClientTCP\ClientTCP\obj\x86\Release\ResolveAssemblyReference.cache
+c:\users\skeleton\documents\visual studio 2010\Projects\ClientTCP\ClientTCP\obj\x86\Release\ClientTCP.exe
+c:\users\skeleton\documents\visual studio 2010\Projects\ClientTCP\ClientTCP\obj\x86\Release\ClientTCP.pdb

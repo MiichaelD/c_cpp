@@ -1,0 +1,179 @@
+// October 13th, 2014
+
+Given the code below, how would you create/implement SR.h so that it produces the correct output 
+
+#include <cstdio>
+#include "SR.h"
+
+int main()
+{
+    int j = 5;
+    int a[] = {10, 15};
+    {
+        SR x(j), y(a[0]), z(a[1]);
+
+        j = a[0];
+        a[0] = a[1];
+        a[1] = j;
+
+        printf("j = %d, a = {%d, %d}\n", j, a[0], a[1]);
+    }
+
+    printf("j = %d, a = {%d, %d}\n", j, a[0], a[1]);
+}
+Output:
+
+j = 10, a = {15, 10}
+j = 5, a = {10, 15}
+
+// MICHAEL :
+
+class SH{
+
+private:
+    int mValue;
+    int* mPointer;
+    
+    ~SH(){
+        *mPointer = val;
+    }
+    
+ public:
+    SH(const int &val){
+        mPointer = &val;    
+        mValue = val;
+    }
+
+};
+
+
+
+};
+============================================================
+Given a vector of integers where all  but one integer occur in pairs. Find the number that only occurs once.
+    ex:
+        {1} - > 1
+        {1,1,2} -> 2
+        {0,0,1,3,1} -> 3
+
+		
+		// MICHAEL :
+#include <unordered_set.h>
+using std;
+int getLonelyInt(vector<int> & arr){
+
+    unordered_set<int> checked;
+
+    for (vector<int>::iterator it = arr.begin() ; it != arr.end(); ++it){
+         int value = *it;
+        unordered_set<int>::const_iterator found = checked.find(value);
+    
+        if(found == checked.end()){
+            checked.remove(value);
+        }
+        else{
+            checked.insert(value);
+        }
+    }
+   
+    return *checked.begin();
+}
+
+
+
+
+
+
+
+
+
+
+
+=================================================
+
+Given a linked list as:
+
+struct Node {
+    int data;
+    Node* next;
+};
+Implement a function that checks to see if there is a loop in the linked list:
+Ex:  1 -> 2 -> 3 -> 4 -> 1 returns true.
+        1 -> 2 -> 3 -> 2 returns true.
+        1 -> 2 -> 3 -> 4 -> NULL returns false.
+
+		
+		// MICHAEL :
+bool isLooped(Node* head) 
+{
+    Node* aux = head;
+    unordered_set<Node*> checked;
+    while(aux->next != null){
+        if(checked.find(aux) != checked.end()){
+            return true;
+        }
+        aux = aux->next;
+    }
+    
+    return false;
+}
+
+
+
+
+=================================================
+Implement a deck of cards
+// MICHAEL :
+class Card{
+    private:
+    int value;
+    int type;
+    
+    
+    public:
+    Card(int value, int type);
+    static const int TYPE_ACE =0, TYPE_2 = 1, TYPE_3 = 2, TYPE_4 = 3;
+    
+}
+
+class DeckCards{
+public:
+    static const int NUMBER_OF_CARDS = 13*4;
+    
+    static Cards* createDeck(){
+
+        Cards* deck = new Cards[NUMBER_OF_CARDS ];
+        
+        for(int i =0; i<NUMBER_OF_CARDS ;i++){
+            cards[i] = new Card(i%13,i/4);
+        }
+        
+        return deck;
+    } 
+    
+    
+    static Cards** giveCards (Cards* deck, int players, int cardsPerPlayer){
+        Cards** playersCards = new Cards*[players];
+        int cardsToGive = players*cardsPerPlayer;
+        
+        for(int i = 0 ; i < players ; i++){
+            playerCards[i] = new Cards[cardsPerPlayer];
+        }
+        
+        for(int i = 0; i < cardsToGive ; i++){
+            playerCards[i%players][i/players] = deck[i];
+        }
+        
+        return playersCards;
+    }
+    
+}
+=================================================
+
+
+
+
+
+
+
+

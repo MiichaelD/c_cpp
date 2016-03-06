@@ -1,0 +1,84 @@
+[10:30:04 AM] Darya Ilyina: Centro del Software
+Av. Lopéz Mateos Sur 2077-Z
+Guadalajara, Jalisco
+
+
+IPC methods
+- Anonymous Pipes, Named Pipes, Sockets, shared memory, files, signals
+
+Difference between process and thread
+A process uses a different memory address space than the
+one who created it, a process can have threads.
+
+A thread is lightweight since it uses less resources (it shares the resources from the process that did create it).
+
+
+
+
+Stack corruption, what does it does and how to achieve it
+
+Stack corruption does make the application to behave wrong or even crash.
+It happens when the stack is accesed in a non-common way due to an error that could be caused by:
+
+The whole stack memory being eaten up. 
+
+void myFunction(){
+	int number = 2304928;
+	myFunction();
+}
+
+Accessing array out of bounds.
+An array points to a defined chunk of memory. When accesing the array out of bounds we read from a location that is not intended for the array.
+
+An undefined/freed pointer pointing or storing a garbage stack address or a function returning a corrupted/illegal memory address.
+
+
+Difference between vector and lists
+
+A vector has contiguous memory, a list does not. 
+This means that accesing to the data pointer that is contained can behave to wrong chunks of memory.
+The vector pre-allocates memory for future elements, the list does not, so memory overhead for adding elements is worse in lists.
+In vectors the elements do require the space for the element type itself, in lists, the elements are chained by pointers that point to the next and the previous element so extra space for those pointers is needed. 
+Vector re-allocates memory for the entire vector whenever you add a new element, lists do not re-allocate the entire memory, they just allocate the memory for the subsequent element.
+In Vectors, Iterators do not remain valid if you change add or remove an element, in lists, iterators remain the same.
+
+
+
+library STL, what containers have I used.
+-Standard Template Library; It has templated containers and algorithms.
+
+Difference between virtual and physical memory
+The virtual memory is an abstraction given to the programmer that points up to memory addresses that are translated into the physical spaces of the RAM,
+physical memory is the whole device that is being used by the system to store up the processes and variables.
+
+
+Virtual inheritance
+
+slicing:   
+
+class Parent{
+public:
+ virtual void a(){
+  std::cout << "Parent";
+ }
+};
+class Child: public Parent{
+public:
+ void a(){
+  std::cout << "Child";
+ }
+};
+
+ Child c;
+ f1( c );
+ f2( &c );
+ f3( c );
+
+Slicing lets you to express a child in terms of the father and vice-versa. 
+
+[father]
+[child]
+
+when you instantiate an object with the previous structure as a child object, the memory referenced by the datatype will point to both father and child's memory addresses
+but if you reference the child in terms of the father the datatype will only point to the father's memory address.
+
