@@ -3,7 +3,7 @@ class Window{
     public:
     int num;
     Window();
-    ~Window();
+    virtual ~Window();
     Window(const Window& rhs);
     Window &operator= ( const Window &rhs);
     
