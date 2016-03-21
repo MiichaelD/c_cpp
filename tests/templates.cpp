@@ -5,7 +5,7 @@ using namespace std;
 
 template<class T> 
 T multiplyBy2(T in){
-	return in + 2;
+	return in * 2;
 }
 
 int main(){
