@@ -54,8 +54,8 @@ int main() {
    pthread_mutex_init(&mutex, NULL); // opcional - innecesarios
    int h,i,j;
    for(h = 0; h < 3; ++h ){
-     for (i=1; i<1000; i++)
-       for (j=1; j<1000; j++);
+     for (i=0; i<1000; ++i)
+       for (j=0; j<1000; ++j);
      incrementar();
    }
    
@@ -65,10 +65,10 @@ int main() {
    exit(EXIT_SUCCESS);//terminamos
 }
 void *funcionHilo(void *arg) {
-  int i,j;
+  int h,i,j;
   for(h = 0; h < 3; ++h ){
-     for (i=1; i<1000; i++)
-       for (j=1; j<1000; j++);
+     for (i=0; i<1000; ++i)
+       for (j=0; j<1000; ++j);
      decrementar();
    }
    pthread_exit(0);
