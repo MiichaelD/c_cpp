@@ -46,39 +46,30 @@ class Main{
 		
 		h1.start();
 
-		int i,j;
-		for (i=1; i<1000; i++)
-			for (j=1; j<1000; j++);
-		m.crementar(1);
-		for (i=1; i<1000; i++)
-			for (j=1; j<1000; j++);
-		m.crementar(1);
-		for (i=1; i<1000; i++)
-			for (j=1; j<1000; j++);
-		m.crementar(1);
-
+		int hi,j;
+		for(h = 0; h < 3; ++h){
+		 	for (i=0; i<1000; ++i)
+				for (j=0; j<1000; ++j);
+			m.crementar(1);
+		}
 		h1.join();
 		System.out.println("Contador Inicial: 5\nContador Final:   "+m.cont);
 	}
 	
 	void funcionHilo() {
-		int i,j;
-		for (i=1; i<1000; i++)
-			for (j=1; j<1000; j++);
-		crementar(-1);
-		for (i=1; i<1000; i++)
-			for (j=1; j<1000; j++);
-		crementar(-1);
-		for (i=1; i<1000; i++)
-			for (j=1; j<1000; j++);
-		crementar(-1);
+		int h,i,j;
+		for(h = 0; h < 3; ++h){
+		 	for (i=1; i<1000; i++)
+				for (j=1; j<1000; j++);
+			m.crementar(-1);
+		}
 	}
 
 	public synchronized void crementar(int x){
 		if(x<0)//decrementamos
-		cont--;
+			--cont;
 		else//incrementamos
-		cont++;
+			++cont;
 	}
 
 }
