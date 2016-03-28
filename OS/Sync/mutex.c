@@ -49,35 +49,28 @@ int cont;
 int main() {
    pthread_t hilo;
    cont =5;
+   printf("Valor inicial de contador: %d.", cont);
    pthread_create(&hilo, NULL, funcionHilo, NULL);
    pthread_mutex_init(&mutex, NULL); // opcional - innecesarios
-   int i,j;
-   for (i=1; i<1000; i++)
-     for (j=1; j<1000; j++);
+   int h,i,j;
+   for(h = 0; h < 3; ++h ){
+     for (i=1; i<1000; i++)
+       for (j=1; j<1000; j++);
      incrementar();
-   for (i=1; i<1000; i++)
-     for (j=1; j<1000; j++);
-     incrementar();
-   for (i=1; i<1000; i++)
-     for (j=1; j<1000; j++);
-     incrementar();
+   }
    
    pthread_join(hilo, NULL);//esperamos que termine el hilo
    pthread_mutex_destroy(&mutex);//destruimos el mutex
-   printf("Valor inicial de contador: 5. \tValor Final: %d\n",cont);
+   printf("\tValor Final: %d\n",cont);
    exit(EXIT_SUCCESS);//terminamos
 }
 void *funcionHilo(void *arg) {
   int i,j;
-  for (i=1; i<1000; i++)
-    for (j=1; j<1000; j++);
-    decrementar();
-  for (i=1; i<1000; i++)
-    for (j=1; j<1000; j++);
-    decrementar();
-  for (i=1; i<1000; i++)
-    for (j=1; j<1000; j++);
-    decrementar();
+  for(h = 0; h < 3; ++h ){
+     for (i=1; i<1000; i++)
+       for (j=1; j<1000; j++);
+     decrementar();
+   }
    pthread_exit(0);
 }
 
