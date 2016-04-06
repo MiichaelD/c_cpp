@@ -30,11 +30,11 @@ time_t getCurrentTime(bool withOffset = true){
 
 void delete_hits_over_5_mins_old(){
     time_t now = getCurrentTime( );
-    while (hitsQueue.size()){
-      time_t hit = hitsQueue.front();
+    while (m_hitsQueue.size()){
+      time_t hit = m_hitsQueue.front();
       if (now - hit >= SECS_IN_5_MINS )
         // hit is older than 5 minutes, delete it form the queue.
-        hitsQueue.pop();
+        m_hitsQueue.pop();
       else
         // next hits are "younger", so break here.
         break;
@@ -42,21 +42,20 @@ void delete_hits_over_5_mins_old(){
 }
 
 void log_hits(){
+    time_t now = getCurrentTime();
     // clear hits over 5 mins every time we log a hit so we don't overflow.
     delete_hits_over_5_mins_old();
-    hitsQueue.push(now);
+    m_hitsQueue.push(now);
 }
 
 size_t get_hits_last_5_min(){
     delete_hits_over_5_mins_old();
-    // for (time_t &time : hitsQueue){
+    // for (time_t &time : m_hitsQueue){
     //     cout << "hits in last 5 min: " << time << endl;
     // }
-    size_t hits = hitsQueue.size();
+    size_t hits = m_hitsQueue.size();
     return hits;
 }
-
-
 
 int main(){
   // log 3 hits
@@ -72,8 +71,5 @@ int main(){
   log_hits();
   
   size_t hits = get_hits_last_5_min();
-  
-  cout << "hits in las 5 mins: " << hits << endl;
-  
-  
+  cout << "hits in las 5 mins: " << hits << endl; 
 }
