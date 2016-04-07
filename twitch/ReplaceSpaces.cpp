@@ -22,7 +22,7 @@ void ReplaceSpaces(char* buffer){
   end = (aux+(spaces*2));
   
   // aux = buffer; // aux will start from the front;
-  while (aux != buffer || spaces){
+  while (aux != buffer && spaces){
     if (*aux == ' '){
       *end = '0';
       *(--end) = '2';
