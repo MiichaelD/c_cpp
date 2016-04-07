@@ -1,7 +1,7 @@
 #include <iostream>
 
 /* 
-  Create a function {void ReplaceSpaces(char *buffer);}  that replaces spaces of a string with "%20"
+  Create a function {void ReplaceSpaces(char *buffer);} that replaces spaces with "%20" inline,
   without using any other helper function or allocating new memory.
   Keep in mind that the buffer is big enough to hold the resulting string.
 
