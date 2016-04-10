@@ -1,4 +1,3 @@
-
 /**
 Name:       A) Counting Sheep
 
@@ -64,8 +63,6 @@ Expanation: In Case #1, since 2 × 0 = 0, 3 × 0 = 0, and so on, Bleatrix will n
 */
 
 #include <iostream>
-#include <unordered_map>
-#include <stack>
 using namespace std;
 
 const int numToBit[10] = {1,2,4,8,16,32,64,128,256,512};
@@ -74,7 +71,7 @@ const int GOAL = 1023; // first 10 bits of an int set to 1 = 1023
 int64_t sheepBleatrix(int64_t N){
     int16_t counter = 0;
     // first 10 bits set to 1 = 1023
-    int64_t copy = N, previousCopy = N;
+    int64_t n = N, copy = N, previousCopy= copy;
     int changesToSkip = 10;
     for(size_t i = 2 ; changesToSkip ; ++i){
         previousCopy = copy;
@@ -83,7 +80,7 @@ int64_t sheepBleatrix(int64_t N){
             copy /= 10;
         }
         if (counter == GOAL)
-            return previousCopy;
+            return n;
         
         if (copy == previousCopy){
             // didn't see any new digit.
@@ -92,8 +89,11 @@ int64_t sheepBleatrix(int64_t N){
             // we saw a new digit.
             changesToSkip = 10;
         }
-        copy = N * i;
+        
+        n = N * i;
+        copy = n;
     }
+    
     return -1;
 }
 
