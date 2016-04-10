@@ -71,7 +71,7 @@ const int GOAL = 1023; // first 10 bits of an int set to 1 = 1023
 int64_t sheepBleatrix(int64_t N){
     int16_t counter = 0;
     // first 10 bits set to 1 = 1023
-    int64_t n = N, copy = N, previousCopy= copy;
+    int64_t copy = N, previousCopy= N;
     int changesToSkip = 10;
     for(size_t i = 2 ; changesToSkip ; ++i){
         previousCopy = copy;
@@ -80,7 +80,7 @@ int64_t sheepBleatrix(int64_t N){
             copy /= 10;
         }
         if (counter == GOAL)
-            return n;
+            return previousCopy;
         
         if (copy == previousCopy){
             // didn't see any new digit.
@@ -89,9 +89,7 @@ int64_t sheepBleatrix(int64_t N){
             // we saw a new digit.
             changesToSkip = 10;
         }
-        
-        n = N * i;
-        copy = n;
+        copy = N * i;
     }
     
     return -1;
