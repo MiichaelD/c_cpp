@@ -33,10 +33,10 @@ main() {
    for (i=a; i<=b; i++) {
       temp = i;
       do {
-	 res = temp % 10;
-	 coc = temp / 10;
-	 digitos[res]++;
-	 temp = coc;
+      	 res = temp % 10;
+      	 coc = temp / 10;
+      	 digitos[res]++;
+      	 temp = coc;
       } while (coc != 0);
    }
    

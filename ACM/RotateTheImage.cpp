@@ -39,8 +39,7 @@ void rotate90deg(int **mat, int dimension){
 		dimeX = (int)dimension/2;
 	//printf("iteraciones = %d\n",dimeX);
 	
-    for(i=0;i<dimeX;i++)
-	{
+    for(i=0;i<dimeX;i++) {
 	  for(j=i;j<maxN-i;j++){
             aux1 = mat[i][j];
 			mat[i][j] = mat[j][maxN-i];
@@ -79,4 +78,8 @@ int main(){
     
     printf("\nFinished Rotation:\n");
 	printMat(matrix,N);
+
+    for (i=0;i<N;++i)
+        delete[] matrix[i];
+    delete[] matrix;
 }

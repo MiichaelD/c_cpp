@@ -21,15 +21,16 @@ Fecha 				Octubre 2012
 
 #define arrayLength 700
 
-typedef struct slot_S{									//estructura Slot
+typedef struct slot_S{	//estructura Slot
 	int key;
 	struct slot_S *next;
 } slot;
 
-slot *vec[arrayLength];							//funcion para generar indice
+slot *vec[arrayLength]; // linkedlist of slots
 
-
-int hashCode(int,int);
+int hashCode(int key,int arrLength){	//funcion para generar indice
+	return key%(arrLength-1);			// primo cercano a 2000/3 y lejano a potencia de 2
+}
 
 
 main()
@@ -63,12 +64,12 @@ main()
 	int nums=0, colisiones2=colisiones;
 	for(i=0; i<arrayLength; i++){ 												//mostramos 600 numeros
 		if(vec[i] != NULL){
-			nums++;
-			printf("%d\t",vec[i]->key);
+			++nums;
+			slot *aux=vec[i];
+			printf("%d\t",aux->key);
 			
 			if((1+nums)%20 ==0)
-			printf("\n");
-			slot *aux=vec[i];
+				printf("\n");
 			while(aux->next != NULL){
 				colisiones2--;
 				aux = aux->next;
@@ -80,7 +81,7 @@ main()
 			
 		}
 	}
-	printf("\nColisiones: %d, \tPorcentaje: %.2f, \tColisiones Perdidas: %d\n\n",colisiones,((double)colisiones/arrayLength),colisiones2);
+	printf("\nColisiones: %d, \tPorcentaje: %.2f, \tColisiones Perdidas: %d\n\n",colisiones,((double)colisiones/arrayLength)*100,colisiones2);
 
 
 
@@ -93,15 +94,15 @@ main()
 				printf("Se encontro el numero %d en la posicion (Index): %d\n",i,hashCode(i,arrayLength));
 			}
 			else{																//buscamos key en la lista de slots
-				int colision=0;												
+				int colision=1;												
 				slot *aux=vec[index];
 				while (aux->next != NULL){										//recorremos lista
-					colision ++;
 					aux = aux->next;
 					if(aux->key == i){											//comparamos si es la misma llave
 						printf("Se encontro el numero %d en la posicion (Index): %d, colision #: %d\n",i,hashCode(i,arrayLength),colision);
 						colision=0;
 					}
+					++colision;
 				}
 				if(colision)
 					printf("Numero no capturado\n");
@@ -114,6 +115,4 @@ main()
 
 }
 
-int hashCode(int key,int arrLength){
-	return key%(arrLength-1); 										// primo cercano a 2000/3 y lejano a potencia de 2
-}
+

@@ -2,14 +2,14 @@
  Programa:		BST.c
  
  Descripcion:		2 ) Arboles Binarios en C y Java                           
-			- Generar 20 numeros aleatorios de [0-100] almacenarlos en BST
-			- Imprimir numeros ordenados ascendentemento (menor a mayor).
-			- Imprimir valores Maximos y Minimos
-			- 3 numeros aleatorios [0-100] y buscar en el arbol. 
+          			- Generar 20 numeros aleatorios de [0-100] almacenarlos en BST
+          			- Imprimir numeros ordenados ascendentemento (menor a mayor).
+          			- Imprimir valores Maximos y Minimos
+          			- 3 numeros aleatorios [0-100] y buscar en el arbol. 
 
 Nota:			Los arboles brindan una rapida forma de ordenar y buscar datos.
-			Existen 3 variantes de recorrido de arboles, dependiendo de lo
-			que se necesite.
+    			Existen 3 variantes de recorrido de arboles, dependiendo de lo
+    			que se necesite.
 			
  Programador:		Michael Duarte
  

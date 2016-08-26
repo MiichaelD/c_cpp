@@ -21,7 +21,7 @@ int main(){
         i=-1;
         len = strlen(linea);
         while(++i<len){
-            character = (int)linea[i];
+            character = linea[i];
             
             if(character == ' '){
                 printf(" ");
