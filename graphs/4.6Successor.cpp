@@ -1,7 +1,7 @@
 /*
 	Description:	4.6 Successor: Writre an algorithm to find the "next" node (i.e., in-order
 					successor) of a given node in a BST. You may assume that each node has a
-					-link to its parent.
+					link to its parent.
 
 	Programmer:		Michael Duarte
 
