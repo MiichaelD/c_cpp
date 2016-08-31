@@ -73,6 +73,9 @@ shared_ptr<Node> leftMostNode(shared_ptr<Node> node){
 }
 
 shared_ptr<Node> findNextInOrderSuccessor(shared_ptr<Node> node){
+	if (node == nullptr)
+		return nullptr;
+	
 	if (node->right != nullptr){
 		return leftMostNode(node->right);
 	} else {
@@ -109,7 +112,10 @@ void findNextNodesForNodes(shared_ptr<Node> root, vector<int> nodes){
 		shared_ptr<Node> node = findNode(root, n);
 		shared_ptr<Node> next = findNextInOrderSuccessor(node);
 		if (next == nullptr){
-			cout << "There is no next node after " << node->value << endl;
+			if (node == nullptr)
+				cout "There is no node " << n << " in the tree" << endl;
+			else
+				cout << "There is no next node after " << node->value << endl;
 		} else {
 			cout << "Next node after " << node->value << " is " << next->value << endl;
 		}

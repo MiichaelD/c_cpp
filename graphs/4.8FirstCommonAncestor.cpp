@@ -2,7 +2,7 @@
 	Description:	4.8 First Common Ancestor: Design an algorithm and write code to find
 					the first common ancestor of 2 nodes in a binary tree.
 
-	Nodes:			- This is not a Binary Search Tree.
+	Notes:			- This is not a Binary Search Tree.
 					- Avoid storing additional nodes in a data structure.
 
 	Special cases:	- Both nodes are the same node.
@@ -43,10 +43,15 @@ struct Node {
 		}
 	}
 	Node *addLeftNode(const T &val) {
+		if (left)
+			delete left;
+
 		left = new Node<T>(val);
 		return left;
 	}
 	Node *addRightNode(const T &val) {
+		if (right)
+			delete right;
 		right = new Node<T>(val);
 		return right;
 	}
