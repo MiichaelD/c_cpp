@@ -63,7 +63,7 @@ vector<vector<shared_ptr<Node>>> getTreeAsVector(shared_ptr<Node> root){
 	vector<vector<shared_ptr<Node>>> result;
 	queue<shared_ptr<Node>> queue;
 	queue.push(root);
-	cout << "Hello world" << endl; 
+
 	while(!queue.empty()){
 		int queueSize = queue.size();
 		auto aux = queue.front();
@@ -93,7 +93,6 @@ vector<vector<shared_ptr<Node>>> getTreeAsVector2(shared_ptr<Node> root){
 	if (root != nullptr)
 		result.back().push_back(root);
 
-	cout << "Hello world" << endl; 
 	while(result.back().size()){
 		result.emplace_back();
 		vector<shared_ptr<Node>> &parents = result[result.size()-2];

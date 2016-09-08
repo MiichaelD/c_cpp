@@ -11,7 +11,7 @@
 
 	Programmer:		Michael Duarte
 
-	Date:			Aug 2nd, 2016.
+	Date:			Sep 2nd, 2016.
 	
 */
 
@@ -23,43 +23,71 @@
 #include <unordered_map>
 #include <memory>
 #include <set>
+	
 
 using namespace std;
 
 template<class T>
-struct Node {
-	T data;
-	Node *left = nullptr, *right = nullptr;
+class Node{
+private:
+	T m_value;
+	shared_ptr<Node> m_left, m_right;
+	
+public:
+	Node(const T &val):m_value(val){}
 
-	Node(const T &val) : data(val) { }
-	~Node() {
-		if (left) {
-			delete left;
-			left = nullptr;
-		}
-		if (right) {
-			delete right;
-			right = nullptr;
-		}
+	T &setValue(const T &val){
+		m_value = val;
+		return m_value;
 	}
-	Node *addLeftNode(const T &val) {
-		if (left)
-			delete left;
 
-		left = new Node<T>(val);
-		return left;
+	const T& value() const {
+		return m_value;
 	}
-	Node *addRightNode(const T &val) {
-		if (right)
-			delete right;
-		
-		right = new Node<T>(val);
-		return right;
+	
+	std::shared_ptr<Node> &left(){
+		return m_left;
 	}
+
+	std::shared_ptr<Node> addLeftNode(const T &val){
+		m_left = std::make_shared<Node>(val);
+		return m_left;
+	}
+
+	std::shared_ptr<Node> addLeftNode(const std::shared_ptr<Node<T>> &other){
+		m_left = other;
+		return m_left;
+	}
+
+	std::shared_ptr<Node> &right(){
+		return m_right;
+	}
+
+	std::shared_ptr<Node> addRightNode(const T &val){
+		m_right = std::make_shared<Node>(val);
+		return m_right;
+	}
+
+	std::shared_ptr<Node> addRightNode(const std::shared_ptr<Node<T>> &other){
+		m_right = other;
+		return m_right;
+	}
+
 };
 
-Node<char> *loadTree() {
-	Node<char> *root = new Node<char>('a');
+template<class T>
+void printPreOrder(std::shared_ptr<Node<T>> root){
+	if (root == nullptr)
+		return;
+
+	std::cout << root->value() << " ";
+	printPreOrder(root->left());
+	printPreOrder(root->right());
+}
+
+
+std::shared_ptr<Node<char>> loadTree() {
+	std::shared_ptr<Node<char>> root = std::make_shared<Node<char>>('a');
 	auto b = root->addLeftNode('b');
 	auto c = root->addRightNode('c');
 
@@ -78,38 +106,18 @@ Node<char> *loadTree() {
 }
 
 template<class T>
-void printInOrder(Node<T> *node) {
-	if (node == nullptr)
-		return;
-
-	printInOrder(node->left);
-	cout << node->data << ", ";
-	printInOrder(node->right);
-}
-
-template<class T>
-void printPreOrder(const Node<T> *node) {
-	if (node == nullptr)
-		return;
-
-	cout << node->data << ", ";
-	printPreOrder(node->left);
-	printPreOrder(node->right);
-}
-
-template<class T>
-bool lookFor(const Node<T> *node, const T &val, vector<const Node<T>*> &path) {
+bool getNodesPathToRoot(std::shared_ptr<Node<T>> node, const T &val, std::vector<std::shared_ptr<Node<T>>> &path) {
 	if (node == nullptr) {
 		return false;
 	}
 	path.push_back(node);
-	if (node->data == val) {
+	if (node->value() == val) {
 		return true;
 	}
 
-	if (lookFor(node->left, val, path))
+	if (getNodesPathToRoot(node->left(), val, path))
 		return true;
-	if (lookFor(node->right, val, path))
+	if (getNodesPathToRoot(node->right(), val, path))
 		return true;
 
 	path.pop_back();
@@ -117,12 +125,11 @@ bool lookFor(const Node<T> *node, const T &val, vector<const Node<T>*> &path) {
 }
 
 template<class T>
-vector<const Node<T>*> findPath(const Node<T> *node, const T &val) {
-	vector<const Node<T>*> path;
-	lookFor(node, val, path);
+std::vector<std::shared_ptr<Node<T>>> getPathToRoot(std::shared_ptr<Node<T>> node, const T &val) {
+	vector<std::shared_ptr<Node<T>>> path;
+	getNodesPathToRoot(node, val, path);
 	return path;
 }
-
 
 // OWN solution:
 // Find the paths from the root all the way down to the nodes and compare them
@@ -131,14 +138,14 @@ vector<const Node<T>*> findPath(const Node<T> *node, const T &val) {
 // NOTE: this solution requires 2 additionals data structures (vectors of nodes)
 // to keep track of the paths.
 template<class T>
-const Node<T>* getFirstCommonAncestor(const Node<T> *root, const T &val1, const T&val2) {
-	vector<const Node<T>*> path1 = findPath(root, val1);
-	vector<const Node<T>*> path2 = findPath(root, val2);
+std::shared_ptr<Node<T>> getFirstCommonAncestor(std::shared_ptr<Node<T>> root, const T &val1, const T&val2) {
+	std::vector<std::shared_ptr<Node<T>>> path1 = getPathToRoot(root, val1);
+	std::vector<std::shared_ptr<Node<T>>> path2 = getPathToRoot(root, val2);
 	int minPathLength = path1.size() < path2.size() ? path1.size() : path2.size();
 
 	if (minPathLength > 0 ){
 		for (int i = 0; i < minPathLength; ++i) {
-			if (path1[i]->data != path2[i]->data) {
+			if (path1[i]->value() != path2[i]->value()) {
 				return i > 0 ? path1[i - 1] : nullptr;
 			}
 		}
@@ -157,17 +164,19 @@ const Node<T>* getFirstCommonAncestor(const Node<T> *root, const T &val1, const 
 // both nodes when we are in the real tree root, we return nullptr, that is,
 // to diferentiate when a node is child of another and when we didn't find both nodes.
 template<class T>
-const Node<T>* getFirstCommonAncestor2(const Node<T> *originalRoot, const Node<T> *root, const Node<T> *p, const Node<T> *q) {
+std::shared_ptr<Node<T>> getFirstCommonAncestor2(std::shared_ptr<Node<T>> originalRoot,
+	std::shared_ptr<Node<T>> root, std::shared_ptr<Node<T>> p, std::shared_ptr<Node<T>> q) {
+
 	if (root == nullptr || (root == p && root == q))
 		return root;
 
-	auto left = getFirstCommonAncestor2(originalRoot, root->left, p, q);
+	auto left = getFirstCommonAncestor2(originalRoot, root->left(), p, q);
 	if (left != nullptr && ( (left == p && left == q) || (left != p && left != q) ) ){
 		// We found a node which is not P or Q OR a node which is P and Q, it must be ancestor.
 		return left;
 	}
 
-	auto right = getFirstCommonAncestor2(originalRoot, root->right, p, q);
+	auto right = getFirstCommonAncestor2(originalRoot, root->right(), p, q);
 	if (right != nullptr && ( (right == p && right == q) || !(right == p || right == q) ) ){
 		// We found a node which is not P or Q OR a node which is P and Q, it must be ancestor.
 		return right;
@@ -190,13 +199,30 @@ const Node<T>* getFirstCommonAncestor2(const Node<T> *originalRoot, const Node<T
 		// subtree, there is no ancestor.
 		return originalRoot == root ? nullptr : (left != nullptr ? left : right); // return non-null value
 	}
-
 }
 
 
+template<class T>
+std::shared_ptr<Node<T>> findNode(std::shared_ptr<Node<T>> root, const T &val){
+	if (root == nullptr) return nullptr;
+
+	if (root->value() == val)
+		return root;
+
+	std::shared_ptr<Node<T>> left = findNode(root->left(), val);
+	if (left != nullptr)
+		return left;
+	
+	std::shared_ptr<Node<T>> right = findNode(root->right(), val);
+	if (right != nullptr)
+		return right;
+
+	return nullptr;
+}
+
 int main() {
 	shared_ptr<Node<char>> root(loadTree());
-	printPreOrder(root.get());
+	printPreOrder(root);
 	cout << endl << endl;
 
 	// char val1 = 'd', val2 = 'g'; // b is ancestor
@@ -204,20 +230,20 @@ int main() {
 	// char val1 = 'a', val2 = 'm'; // NO ancestor
 	// char val1 = 'b', val2 = 'm'; // NO ancestor
 	char val1 = 'f', val2 = 'f';
-	const Node<char> *antecestor = getFirstCommonAncestor(root.get(), val1, val2);
+	auto antecestor = getFirstCommonAncestor(root, val1, val2);
 	if (antecestor != nullptr) {
-		cout << "First Common Ancestor of node: \'" << val1 << "\' and \'" << val2 << "\' is: \t" << antecestor->data << endl;
+		cout << "First Common Ancestor of node: \'" << val1 << "\' and \'" << val2 << "\' is: \t" << antecestor->value() << endl;
 	}
 	else {
 		cout << "No common ancestor found" << endl;
 	}
 
 
-	auto node1 = findPath(root.get(), val1).back();
-	auto node2 = findPath(root.get(), val2).back();
-	antecestor = getFirstCommonAncestor2(root.get(), root.get(), node1, node2);
+	auto node1 = findNode(root, val1);
+	auto node2 = findNode(root, val2);
+	antecestor = getFirstCommonAncestor2(root, root, node1, node2);
 	if (antecestor != nullptr) {
-		cout << "First Common Ancestor of node: \'" << val1 << "\' and \'" << val2 << "\' is: \t" << antecestor->data << endl;
+		cout << "First Common Ancestor of node: \'" << val1 << "\' and \'" << val2 << "\' is: \t" << antecestor->value() << endl;
 	}
 	else {
 		cout << "No common ancestor found" << endl;
