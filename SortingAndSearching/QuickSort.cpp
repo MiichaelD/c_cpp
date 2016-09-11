@@ -45,7 +45,6 @@ int partition(vector<int> &arr, int left, int right){
 	cout << "\tPivot: " << pivot << " at index: " << index <<
 			". left: " << left << ". right: " << right << endl ;  
 	while (left <= right){
-
 		while (arr[left] < pivot){ 
 			cout << "\t\t" << arr[left] << " @(" << left << ") < " << pivot << endl;  
 			++left;
@@ -55,7 +54,7 @@ int partition(vector<int> &arr, int left, int right){
 			--right;
 		}
 
-		while (left <= right){
+		if (left <= right){
 			swap(arr, left, right);
 			++left;
 			--right;
