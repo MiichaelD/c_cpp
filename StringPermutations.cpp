@@ -55,8 +55,8 @@ void printSortedStrings(int remaining, const string &prefix = "") {
 
 
 int main() {
-	string toPermut = "abc";
-	//permutation(toPermut);
-	printSortedStrings(4);
+	string toPermut = "abcd";
+	permutation(toPermut);
+	// printSortedStrings(4);
 	return EXIT_SUCCESS;
 }

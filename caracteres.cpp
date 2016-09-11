@@ -29,7 +29,7 @@ main(){
   
   
   
-  printf("tecle un caracter: ");
+  printf("teclee un caracter: ");
   c1 = getch();
   fflush(stdin);
   if(isdigit(c1))
