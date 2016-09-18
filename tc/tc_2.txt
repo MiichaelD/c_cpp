@@ -51,14 +51,14 @@ class Node {
 
 //Reverse linked list, return new head - Define next function:
 Node* reverse(Node* head) {
-    Node* aux2 = head;
+    Node* oldHead = head;
     Node* newHead = head;
     
-    while( aux2->next != NULL){
-        Node* aux = aux2->next;
-        aux2->next = aux->next;
-        aux->next = newHead;
-        newHead = aux;
+    while( oldHead->next != NULL){
+        Node* nextNode = oldHead->next;
+        oldHead->next = nextNode->next;
+        nextNode->next = newHead;
+        newHead = nextNode;
     }
     return newHead;
 }

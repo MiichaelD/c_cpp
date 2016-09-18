@@ -7,8 +7,6 @@
 */
 
 #include <iostream>
-#include <unordered_set>
-
 #include <string>
 #include <vector>
 
@@ -40,7 +38,7 @@ vector<vector<int>> getSubsets(const vector<int> &set, int index = 0){
 
 		vector<vector<int>> moreSets;
 		moreSets.reserve(results.size());
-		for (const vector<int> result : results){
+		for (const vector<int> &result : results){
 			moreSets.push_back(result);
 			moreSets.back().push_back(set[index]);
 		}

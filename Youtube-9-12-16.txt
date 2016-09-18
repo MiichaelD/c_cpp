@@ -1,0 +1,55 @@
+1) Ajedrez, validar si un movimiento de un Knight (movimiento en L) es valido, dado una coordenada start y otra de end.
+
+- Continuacion, dadas 2 coordenadas, encontrar la ruta mas corta de llegar del punto A al punto B usando el la pieza Knight
+
+
+2) lista de sugerencia de amigos de tus amigos para agregar en una red social.
+Por ejemplo, si tienes N amigos, y esos amigos tienen sus amigos, devuelve una lista de amigos de amigos, ordenada por numero de amigos en común descendentemente.
+
+
+typedef map<string,vector<string>> SocialNetwork; 
+map<string, int> getSuggestedFriends(const string &userID, SocialNetwork &sn){
+	...
+
+}
+
+
+
+- Como puedes regresar solo los 3 amigos de amigos con mas amigos en comun? Cual es la complejidad en memoria y tiempo
+
+3) Dado un numero de ciudades y un numero de dias para viajar y lla funcion isSunny(int city, int day)  checar si puedes realizar un viaje, esto es,
+
+Empiezas en ciudad 0, te quedas por lo menos un dia, luego puedes quedarte en esa cudad o avanzar a la siguiente. Solo te puedes quedar (si el siguiente ia esta soleado, y solo puedes avanzar si el siguiente dia en la otra ciudad esta soleado).
+
+solo puedes viajar a la siguiente ciudad (no se puede saltar), no te puedes devolver a una ciudad anterior
+
+ej:
+ciudad:    Clima por dia: (Sunny o Rainy)
+  -				0 	1 	2 	3	4	5
+  0				S 	S 	S 	S 	S 	S
+  1				R 	S 	R 	S 	R 	R
+  2             S 	R 	R 	R 	S 	R
+  3             S 	S 	S 	S 	S 	S
+
+ Aqui si se puede relizar el viaje si num cities = 3 and num days = 6
+ Nos quedamos en ciudad 0 hasta el dia 2 despues nos vamos a la ciudad 1 en el dia 3, al dia 4 nos vamos a la ciudad 2 y al 5to dia llegamos a la ciudad 3.
+
+Si la ciudad 2 en el dia dos hubiese estado soleada se habria acabado el recorrido al dia 3 porque se habria podido avanzar un dia por ciudad sin parar.
+
+  bool isPossible(int numCities, int numDays){  }
+
+- Medir la complejidad del algoritmo
+
+
+4) Lunch 
+
+5) Checar si una matriz de NxM es ToePlitz matrix
+(https://en.wikipedia.org/wiki/Toeplitz_matrix )
+-que pasaria si solo puedes tener 2 filas en memoria a la vez porque los datos de la matriz no caben en momria. como lo resolverias.
+
+-Si solo tuvieras suficiente memoria para cargar 2 filas a la vez (fila 1 y fila 2) (fila 3 y fila 4) pero no fila 2 y 3 al mismo tiempo porque estan paginadas diferente, aah y tienes suficiente memoria para otro arreglo.
+
+-y si no tuvieras memoria para un arreglo extra??
+
+
+6)Diseña un Tetris, que clases ocupas, que funciones ocupas y todo eso. En esta fue la que la cagué mas pensando como definir las figuras.
