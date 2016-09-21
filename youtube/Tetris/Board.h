@@ -8,8 +8,9 @@ Date:			Sep 12, 2016.
 
 #ifndef _TETRIS_BOARD_CLASS_H_
 #define _TETRIS_BOARD_CLASS_H_
-#include <iostream>
 
+#include "Piece.h"
+#include <memory>
 
 class Board{
 private:
@@ -22,8 +23,8 @@ private:
 		matrix = createMatrix<int>(rows, cols);
 	}
 
-	int getWidth() {return cols;}
-	int getHeight() {return rows;}
+	bool doesPieceFit() const;
+	void importPiece();
 
 public:
 	Board(){//:Board(cols,rows){
@@ -34,38 +35,19 @@ public:
 		initMatrix();
 	}
 
-	void assignPiece(std::shared_ptr<Piece> piece){
-		curPiece = piece;
-		piece->centerInBoard(cols);
+	int getWidth() const {return cols;}
+	int getHeight() const {return rows;}
 
-	}
+	std::shared_ptr<Piece> getPiece() {return curPiece;}
+	bool assignPiece(std::shared_ptr<Piece> piece);
+	bool tick();
+	void print();
 
-	void print(){
-		using namespace std;
-		for (int r = 0; r < rows; ++r){
-			for (int c = 0; c < cols; ++c){
-				cout << '|';
-				if (matrix[r][c]){
-					cout << matrix[r][c];
-				} else if (curPiece && curPiece->isPointContained(r,c)){
-					cout << curPiece->getPoint(r,c);
-				} else {
-					cout << ' ';
-				}
-				cout << '|';
-			}
-			cout << endl;
-		}
-	}
-
-	bool canMovePieceDown(){
-		if (curPiece){
-			if (curPiece.)
-		}
-	}
-
-	bool tick(){
-		
-	}
+	bool canMovePieceDown() const;
+	bool movePieceDown();
+	bool canMovePieceLeft() const;
+	bool movePieceLeft();
+	bool canMovePieceRight() const;
+	bool movePieceRight();
 };
 #endif //_TETRIS_BOARD_CLASS_H_

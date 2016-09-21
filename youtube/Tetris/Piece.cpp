@@ -7,7 +7,7 @@ Date:			Sep 12, 2016.
 */
 
 #include "Piece.h"
-
+#include <climits>
 
 Piece::Piece(int i):id(i){}
 
@@ -49,13 +49,55 @@ bool Piece::colidesAtPoint(int r, int c, bool relativeToBoard){
 	return getPoint(r,c,relativeToBoard) != 0;
 }
 
-int Piece::getBottomRowForCol(int c, bool relativeToBoard){
-	if(isPointContained(row,c, relativeToBoard)){
-		if (matrix[matrixSize-1][c] == id){
-			return relativeToBoard ? row+matrixSize : matrixSize;
-		}
-		return relativeToBoard ? row + matrixSize-1 : matrixSize-1;
+int  Piece::getLeftForRow(int r, bool relativeToBoard){
+	if(isPointContained(r,col, relativeToBoard)){
+		if (relativeToBoard) r -= row;
+		int i = 0;
+		for (; i < matrixSize && matrix[r][i] == 0; ++i);
+		if (i == matrixSize)
+			return INT_MAX;
+		return i - 1 + (relativeToBoard ? col : 0);
 	}
+	return INT_MIN;
+}
+
+int  Piece::getRightForRow(int r, bool relativeToBoard){
+	if(isPointContained(r,col, relativeToBoard)){
+		if (relativeToBoard) r -= row;
+		int i = matrixSize - 1;
+		for (; i >= 0 && matrix[r][i] == 0; --i);
+		if (i < 0)
+			return INT_MIN;
+		return i + 1 + (relativeToBoard ? col : 0);
+	}
+	return INT_MAX;
+}
+
+
+int Piece::getBottomForCol(int c, bool relativeToBoard){
+	if(isPointContained(row,c, relativeToBoard)){
+		if (relativeToBoard) c -= col;
+		int i = matrixSize - 1;
+		for (; i >= 0 && matrix[i][c] == 0; --i);
+		if (i < 0){
+			return INT_MIN;
+		}
+		return i + 1 + (relativeToBoard ? row : 0);
+	}
+	return INT_MAX;
+}
+
+std::vector<int> Piece::getBottom(bool relativeToBoard){
+	std::vector<int> bottom(matrixSize);
+	for (int c = 0 ; c < matrixSize; ++c){
+		int r = matrixSize-1;
+		for (; r >= 0 && matrix[r][c] == 0; --r);
+		if (r < 0)
+			bottom[c] = INT_MIN;
+		else
+			bottom[c] = r + 1 + (relativeToBoard ? row : 0);
+	}
+	return bottom;
 }
 
 bool Piece::moveDown(int i){

@@ -1,0 +1,188 @@
+/*
+Description:	Design the game of Tetris.
+
+Programmer:		Michael Duarte
+
+Date:			Sep 12, 2016.	
+*/
+
+#include "Board.h"
+#include <iostream>
+#include <algorithm>
+#include <climits>
+
+bool Board::assignPiece(std::shared_ptr<Piece> piece){
+	curPiece = piece;
+	piece->centerInBoard(cols);
+	if (!doesPieceFit()){
+		curPiece = nullptr;
+		return false;
+	}
+	return true;
+}
+
+bool Board::doesPieceFit() const {
+	auto &mat = curPiece->getMatrix();
+	int r = curPiece->getRow();
+	int c = curPiece->getCol();
+	int rowEnd = std::min(rows, curPiece->getSize()+r);
+	int colEnd = std::min(cols, curPiece->getSize()+c);
+
+	if (c < 0) c = 0;
+
+	for (int i = r; i < rowEnd; ++i){
+		for (int j = c; j < colEnd; ++j){
+			if (matrix[i][j] && mat[i-r][j-c])
+				return false;
+		}
+	}
+	return true;
+}
+
+bool Board::canMovePieceDown() const {
+	if (curPiece){
+		// 1) Polling column by column
+		std::pair<int,int> origin = curPiece->getPosition();
+		int rowSize = curPiece->getSize();
+		for (int c = 0 ; c < rowSize; ++c){
+			int col = origin.second + c;
+			int row = curPiece->getBottomForCol(col);
+			// std::cout << row << ", "<< col << "\t";
+			if (row == INT_MIN) // we don't care about this column
+				continue;
+			if (row >= rows || matrix[row][col]){
+				// std::cout << std::endl;
+				return false;
+			}
+		}
+		// std::cout << std::endl;
+
+		// 2) getting all bottom points at once
+		// auto bottom = curPiece->getBottom();
+		// auto column = curPiece->getCol();
+		// for (int c = 0 ; c < bottom.size(); ++c){
+		// 	int col = column + c;
+		// 	int row = bottom[c];
+		// 	// std::cout << "\tpos: r=" << row << ", c=" << col;
+		// 	if (row >= rows || col >= cols || matrix[row][col]){
+		// 		std::cout << std::endl;
+		// 		return false;
+		// 	}
+		// }
+
+		return true;
+	}
+	return false;
+}
+
+bool Board::movePieceDown(){
+	if (canMovePieceDown()){
+		curPiece->moveDown();
+		return true;
+	}
+	return false;
+}
+
+bool Board::canMovePieceLeft() const {
+	if (curPiece){
+		std::pair<int,int> origin = curPiece->getPosition();
+		int colSize = curPiece->getSize();
+		for (int r = 0 ; r < colSize; ++r){
+			int row = origin.first + r;
+			int col = curPiece->getLeftForRow(row);
+			// std::cout << row << ", "<< col << "\t";
+			if (col == INT_MAX) // we don't care about this row
+				continue;
+			if (col < 0 || col >= cols || matrix[row][col]){
+				// std::cout << ". Unacceptable" <<std::endl;
+				return false;
+			}
+		}
+		// std::cout << std::endl;
+		return true;
+	}
+	return false;
+}
+
+bool Board::movePieceLeft(){
+	if (canMovePieceLeft()){
+		curPiece->moveLeft();
+		return true;
+	}
+	return false;
+}
+
+bool Board::canMovePieceRight() const {
+	if (curPiece){
+		std::pair<int,int> origin = curPiece->getPosition();
+		int colSize = curPiece->getSize();
+		for (int r = 0 ; r < colSize; ++r){
+			int row = origin.first + r;
+			int col = curPiece->getRightForRow(row);
+			// std::cout << row << ", "<< col << "\t";
+			if (col == INT_MIN) // we don't care about this row
+				continue;
+			if (col < 0 || col >= cols || matrix[row][col]){
+				// std::cout << ". Unacceptable" <<std::endl;
+				return false;
+			}
+		}
+		// std::cout << std::endl;
+		return true;
+	}
+	return false;
+}
+
+bool Board::movePieceRight(){
+	if (canMovePieceRight()){
+		curPiece->moveRight();
+		return true;
+	}
+	return false;
+}
+
+void Board::importPiece(){
+	auto &mat = curPiece->getMatrix();
+	int r = curPiece->getRow();
+	int c = curPiece->getCol();
+	int rowEnd = std::min(rows, curPiece->getSize()+r);
+	int colEnd = std::min(cols, curPiece->getSize()+c);
+
+	if (c < 0) c = 0;
+
+	for (int i = r; i < rowEnd; ++i){
+		for (int j = c; j < colEnd; ++j){
+			if (mat[i-r][j-c])
+				matrix[i][j] = mat[i-r][j-c];
+		}
+	}
+}
+
+bool Board::tick(){
+	if (movePieceDown()){
+		return true;
+	} else {
+		importPiece();
+		curPiece = nullptr;
+		return true;
+	}
+	return false;
+}
+
+void Board::print(){
+	using namespace std;
+	for (int r = 0; r < rows; ++r){
+		for (int c = 0; c < cols; ++c){
+			cout << '|';
+			if (matrix[r][c]){
+				cout << matrix[r][c];
+			} else if (curPiece && curPiece->isPointContained(r,c)){
+				cout << curPiece->getPoint(r,c);
+			} else {
+				cout << ' ';
+			}
+			cout << '|';
+		}
+		cout << endl;
+	}
+}

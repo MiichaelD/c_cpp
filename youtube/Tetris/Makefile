@@ -9,7 +9,11 @@ CFLAGS=-std=c++11
 LDFLAGS=
 
 #source files to compile
-SOURCES=Piece.cpp PieceFactory.cpp PieceQueue.cpp Score.cpp _5_tetris.cpp
+SOURCES=Piece.cpp\
+PieceFactory.cpp\
+PieceQueue.cpp Score.cpp\
+Board.cpp\
+_5_tetris.cpp
 # SOURCES=*.cpp
 
 #object files after compilation should be sources but replacing the extension

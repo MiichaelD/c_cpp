@@ -36,7 +36,10 @@ public:
 	bool isPointContained(int r, int c, bool relativeToBoard = true);
 	int  getPoint(int r, int c, bool relativeToBoard = true);
 	bool colidesAtPoint(int r, int c, bool relativeToBoard = true);
-	int  getBottomRowForCol(int c, bool relativeToBoard = true);
+	int  getLeftForRow(int r, bool relativeToBoard = true);
+	int  getRightForRow(int r, bool relativeToBoard = true);
+	int  getBottomForCol(int c, bool relativeToBoard = true);
+	std::vector<int> getBottom(bool relativeToBoard = true);
 	bool moveDown(int i = 1);
 	bool moveLeft(int i = 1);
 	bool moveRight(int i = 1);
