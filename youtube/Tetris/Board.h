@@ -24,7 +24,7 @@ private:
 	}
 
 	bool doesPieceFit() const;
-	void importPiece();
+	bool importPiece();
 
 public:
 	Board(){//:Board(cols,rows){
@@ -42,6 +42,7 @@ public:
 	bool assignPiece(std::shared_ptr<Piece> piece);
 	bool tick();
 	void print();
+	void restart();
 
 	bool canMovePieceDown() const;
 	bool movePieceDown();
@@ -49,5 +50,7 @@ public:
 	bool movePieceLeft();
 	bool canMovePieceRight() const;
 	bool movePieceRight();
+
+	void rotatePiece(bool clockwise = true);
 };
 #endif //_TETRIS_BOARD_CLASS_H_

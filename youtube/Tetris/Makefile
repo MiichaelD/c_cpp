@@ -6,13 +6,14 @@ CC=g++
 CFLAGS=-std=c++11
 
 #linker flags
-LDFLAGS=
+LDFLAGS=-pthread
 
 #source files to compile
 SOURCES=Piece.cpp\
 PieceFactory.cpp\
 PieceQueue.cpp Score.cpp\
 Board.cpp\
+Game.cpp\
 _5_tetris.cpp
 # SOURCES=*.cpp
 

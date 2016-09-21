@@ -24,7 +24,10 @@ private:
 
 public:
 	PieceQueue(uint32_t numPieces = 2);
-	std::shared_ptr<Piece> getNextPiece();
+	void restart();
+	void print() const;
+
+	std::shared_ptr<Piece> getNext();
 	const std::deque<std::shared_ptr<Piece>> getQueue() const;
 };
 #endif // _PIECE_QUEUE_CLASS_H_

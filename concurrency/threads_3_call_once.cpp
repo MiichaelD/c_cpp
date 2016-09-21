@@ -35,9 +35,9 @@ public:
 	void shared_print(string id, int value) {
 		if (!f.is_open()) {   // lazy initialization   -- A
 			std::unique_lock<mutex> locker(m_mutex);
-         if (!f.is_open()) {
-			   f.open("log.txt");   // This must be synchronized  -- B
-         }
+	        if (!f.is_open()) {
+				f.open("log.txt");   // This must be synchronized  -- B
+	        }
 		}
 		f << "From " << id << ": " << value << endl;  // I don't care this is not synchronized
 	}

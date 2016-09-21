@@ -25,10 +25,12 @@ private:
 
 public:
 	Score(uint32_t sco = 0, uint32_t line = 0, uint32_t lev = 1);
+	void restart();
+	void print() const;
 
-	uint32_t getScore() {return score; }
-	uint32_t getLevel() {return level; }
-	uint32_t getLines() {return lineCounter; }
+	uint32_t getScore() const {return score; }
+	uint32_t getLevel() const {return level; }
+	uint32_t getLines() const {return lineCounter; }
 
 	uint32_t setScore(uint32_t s) {score = s; }
 	uint32_t setLevel(uint32_t s) {level = s; }

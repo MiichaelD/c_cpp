@@ -141,31 +141,42 @@ bool Board::movePieceRight(){
 	return false;
 }
 
-void Board::importPiece(){
-	auto &mat = curPiece->getMatrix();
-	int r = curPiece->getRow();
-	int c = curPiece->getCol();
-	int rowEnd = std::min(rows, curPiece->getSize()+r);
-	int colEnd = std::min(cols, curPiece->getSize()+c);
+void Board::rotatePiece(bool clockwise){
+	if(curPiece)
+		curPiece->rotate(clockwise);
+}
 
-	if (c < 0) c = 0;
+bool Board::importPiece(){
+	if (curPiece){
+		auto &mat = curPiece->getMatrix();
+		int r = curPiece->getRow();
+		int c = curPiece->getCol();
+		int rowEnd = std::min(rows, curPiece->getSize()+r);
+		int colEnd = std::min(cols, curPiece->getSize()+c);
 
-	for (int i = r; i < rowEnd; ++i){
-		for (int j = c; j < colEnd; ++j){
-			if (mat[i-r][j-c])
-				matrix[i][j] = mat[i-r][j-c];
+		if (c < 0) c = 0;
+
+		for (int i = r; i < rowEnd; ++i){
+			for (int j = c; j < colEnd; ++j){
+				if (mat[i-r][j-c])
+					matrix[i][j] = mat[i-r][j-c];
+			}
 		}
+		return true;
 	}
+	return false;
 }
 
 bool Board::tick(){
 	if (movePieceDown()){
 		return true;
 	} else {
-		importPiece();
-		curPiece = nullptr;
-		return true;
+		if (importPiece()){
+			curPiece = nullptr;
+			return true;
+		}
 	}
+	// we cannot move down and have no piece
 	return false;
 }
 
@@ -185,4 +196,16 @@ void Board::print(){
 		}
 		cout << endl;
 	}
+}
+
+void Board::restart(){
+	// clear board matrix
+	for (int r = 0 ; r < rows; ++r){
+		for (int c = 0; c < cols; ++c){
+			matrix[r][c] = 0;
+		}
+	}
+
+	// clear piece
+	curPiece = nullptr;
 }

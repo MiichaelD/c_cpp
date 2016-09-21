@@ -8,9 +8,21 @@ Date:			Sep 12, 2016.
 
 #include "Score.h"
 #include <cmath> // log2()
+#include <iostream>
 
 Score::Score(uint32_t sco, uint32_t line, uint32_t lev):score(sco),lineCounter(line),level(lev){
 	updateLevel();
+}
+
+void Score::restart(){
+	score = 0;
+	lineCounter = 0;
+	level = 1;
+}
+
+void Score::print() const {
+	std::cout << "Score: "<< score <<". Level: "<< level << ". Lines: "
+	<< lineCounter <<std::endl;
 }
 
 void Score::updateLevel(){

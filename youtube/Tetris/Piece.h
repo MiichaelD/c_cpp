@@ -29,17 +29,19 @@ public:
 	int getId() const {return id;}
 	int getRow() const {return row;}
 	int getCol() const {return col;}
-
-	void setPosition(int r, int c);
-	std::pair<int,int> getPosition();
+	
 	void centerInBoard(int boardWidth);
-	bool isPointContained(int r, int c, bool relativeToBoard = true);
-	int  getPoint(int r, int c, bool relativeToBoard = true);
-	bool colidesAtPoint(int r, int c, bool relativeToBoard = true);
-	int  getLeftForRow(int r, bool relativeToBoard = true);
-	int  getRightForRow(int r, bool relativeToBoard = true);
-	int  getBottomForCol(int c, bool relativeToBoard = true);
-	std::vector<int> getBottom(bool relativeToBoard = true);
+	void setPosition(int r, int c);
+	std::pair<int,int> getPosition() const;
+	
+	bool isPointContained(int r, int c, bool relativeToBoard = true) const;
+	int  getPoint(int r, int c, bool relativeToBoard = true) const;
+	bool colidesAtPoint(int r, int c, bool relativeToBoard = true) const;
+	int  getLeftForRow(int r, bool relativeToBoard = true) const;
+	int  getRightForRow(int r, bool relativeToBoard = true) const;
+	int  getBottomForCol(int c, bool relativeToBoard = true) const;
+	std::vector<int> getBottom(bool relativeToBoard = true) const;
+
 	bool moveDown(int i = 1);
 	bool moveLeft(int i = 1);
 	bool moveRight(int i = 1);

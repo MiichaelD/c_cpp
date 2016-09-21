@@ -16,27 +16,27 @@ const Matrix<int> &Piece::rotate(bool clockwise){ // some pieces might not need 
 	return matrix;
 }
 
-void Piece::setPosition(int r, int c){
-	row = r;
-	col = c;
-}
-
-std::pair<int,int> Piece::getPosition(){
-	return {row,col};
-}
-
 void Piece::centerInBoard(int boardWidth){
 	int startCol = (boardWidth - matrixSize)/2;
 	setPosition(0,startCol);
 }
 
-bool Piece::isPointContained(int r, int c, bool relativeToBoard){
+void Piece::setPosition(int r, int c){
+	row = r;
+	col = c;
+}
+
+std::pair<int,int> Piece::getPosition() const {
+	return {row,col};
+}
+
+bool Piece::isPointContained(int r, int c, bool relativeToBoard) const {
 	if (relativeToBoard)
 		return r >= row && c >= col && r < (row + matrixSize) && c < (col + matrixSize);
 	return r >= 0 && c>=0 && r < matrixSize && c < matrixSize;
 }
 
-int Piece::getPoint(int r, int c, bool relativeToBoard){
+int Piece::getPoint(int r, int c, bool relativeToBoard) const {
 	if (isPointContained(r,c, relativeToBoard)){
 		if (relativeToBoard)
 			return matrix[r-row][c-col];
@@ -45,11 +45,11 @@ int Piece::getPoint(int r, int c, bool relativeToBoard){
 	return 0;
 }
 
-bool Piece::colidesAtPoint(int r, int c, bool relativeToBoard){
+bool Piece::colidesAtPoint(int r, int c, bool relativeToBoard) const {
 	return getPoint(r,c,relativeToBoard) != 0;
 }
 
-int  Piece::getLeftForRow(int r, bool relativeToBoard){
+int  Piece::getLeftForRow(int r, bool relativeToBoard) const {
 	if(isPointContained(r,col, relativeToBoard)){
 		if (relativeToBoard) r -= row;
 		int i = 0;
@@ -61,7 +61,7 @@ int  Piece::getLeftForRow(int r, bool relativeToBoard){
 	return INT_MIN;
 }
 
-int  Piece::getRightForRow(int r, bool relativeToBoard){
+int  Piece::getRightForRow(int r, bool relativeToBoard) const {
 	if(isPointContained(r,col, relativeToBoard)){
 		if (relativeToBoard) r -= row;
 		int i = matrixSize - 1;
@@ -74,7 +74,7 @@ int  Piece::getRightForRow(int r, bool relativeToBoard){
 }
 
 
-int Piece::getBottomForCol(int c, bool relativeToBoard){
+int Piece::getBottomForCol(int c, bool relativeToBoard) const {
 	if(isPointContained(row,c, relativeToBoard)){
 		if (relativeToBoard) c -= col;
 		int i = matrixSize - 1;
@@ -87,7 +87,7 @@ int Piece::getBottomForCol(int c, bool relativeToBoard){
 	return INT_MAX;
 }
 
-std::vector<int> Piece::getBottom(bool relativeToBoard){
+std::vector<int> Piece::getBottom(bool relativeToBoard) const {
 	std::vector<int> bottom(matrixSize);
 	for (int c = 0 ; c < matrixSize; ++c){
 		int r = matrixSize-1;
