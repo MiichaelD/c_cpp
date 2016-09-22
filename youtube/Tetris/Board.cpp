@@ -10,6 +10,7 @@ Date:			Sep 12, 2016.
 #include <iostream>
 #include <algorithm>
 #include <climits>
+#include <stdexcept>
 
 bool Board::assignPiece(std::shared_ptr<Piece> piece){
 	curPiece = piece;
@@ -46,12 +47,14 @@ bool Board::canMovePieceDown() const {
 		int rowSize = curPiece->getSize();
 		for (int c = 0 ; c < rowSize; ++c){
 			int col = origin.second + c;
+			if (col < 0 || col >= cols)
+				continue; // we don't care about this column
 			int row = curPiece->getBottomForCol(col);
 			// std::cout << row << ", "<< col << "\t";
 			if (row == INT_MIN) // we don't care about this column
 				continue;
 			if (row >= rows || matrix[row][col]){
-				// std::cout << std::endl;
+				// std::cout << ". Unacceptable" <<std::endl;
 				return false;
 			}
 		}
@@ -89,6 +92,8 @@ bool Board::canMovePieceLeft() const {
 		int colSize = curPiece->getSize();
 		for (int r = 0 ; r < colSize; ++r){
 			int row = origin.first + r;
+			if (row >= rows)
+				break; // we don't care about this nor any next row
 			int col = curPiece->getLeftForRow(row);
 			// std::cout << row << ", "<< col << "\t";
 			if (col == INT_MAX) // we don't care about this row
@@ -118,6 +123,8 @@ bool Board::canMovePieceRight() const {
 		int colSize = curPiece->getSize();
 		for (int r = 0 ; r < colSize; ++r){
 			int row = origin.first + r;
+			if (row >= rows)
+				break; // we don't care about this nor any next row
 			int col = curPiece->getRightForRow(row);
 			// std::cout << row << ", "<< col << "\t";
 			if (col == INT_MIN) // we don't care about this row
@@ -143,20 +150,32 @@ bool Board::movePieceRight(){
 
 void Board::rotatePiece(bool clockwise){
 	if(curPiece){
-		curPiece->rotate(clockwise);
+		// if the piece loses some cells when rotating (i.e. some cells are
+		// left out of the board), don't rotate
+		int row = curPiece->getRow();
+		int size = curPiece->getSize();
+		int lastCell = row + size;
+		if (lastCell <= rows){
+			curPiece->rotate(clockwise);
 
-		// fix for cases where the piece is out of board bounds
-		// when we rotate them they should be moved to be fully
-		// inside of board's boundaries.
-		int col = curPiece->getCol();
-		if (col < 0){
-			curPiece->moveRight(-col);
-		} else {
-			int size = curPiece->getSize();
-			int lastCell = col + size;
-			if (lastCell > cols){
-				curPiece->moveLeft(lastCell - cols);
+			// fix for cases where the piece is out of board bounds
+			// when we rotate them they should be moved to be fully
+			// inside of board's boundaries.
+			int col = curPiece->getCol();
+			if (col < 0){
+				curPiece->moveRight(-col);
+			} else {
+				lastCell = col + size;
+				if (lastCell > cols){
+					curPiece->moveLeft(lastCell - cols);
+				}
 			}
+
+			// if the piece colides with other cells after being rotated, revert.
+			if (!doesPieceFit()){
+				curPiece->rotate(!clockwise);
+			}
+
 		}
 	}
 }
@@ -169,12 +188,14 @@ bool Board::importPiece(){
 		int rowEnd = std::min(rows, curPiece->getSize()+r);
 		int colEnd = std::min(cols, curPiece->getSize()+c);
 
-		if (c < 0) c = 0;
-
 		for (int i = r; i < rowEnd; ++i){
-			for (int j = c; j < colEnd; ++j){
-				if (mat[i-r][j-c])
+			for (int j = (c < 0 ? 0 : c); j < colEnd; ++j){
+				if (mat[i-r][j-c]){ // piece's cell is occupied
+					if (matrix[i][j]){ // board's cell is occupied
+						throw std::runtime_error("Importing a piece's cell to an occupied cell in board");
+					}
 					matrix[i][j] = mat[i-r][j-c];
+				}
 			}
 		}
 		return true;
@@ -211,6 +232,7 @@ void Board::clearRow(int row){
 			break;
 	}
 
+	// if we have cells in the first row, fill them with 0s
 	if (r == 0 && cells > 0){
 		for (int c = 0 ; c < cols; ++c)
 			matrix[r][c] = 0;
@@ -228,7 +250,8 @@ uint32_t Board::clearLines(){
 		if (cells == cols){
 			++clearedLines;
 			clearRow(r);
-			--r; // repeat this line
+			std::cout << "Clearing row: " << r << std::endl;
+			++r; // repeat this line
 		} else if (cells == 0){
 			break;
 		}

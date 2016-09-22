@@ -59,10 +59,11 @@ void Game::run(){
 }
 
 void Game::print(){
+	std::cout << std::endl;
 	m_board.print();
 	m_score.print();
 	m_piecesQueue.print();
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl;
 }
 
 void Game::processCommands(){
@@ -89,7 +90,7 @@ void Game::processCommands(){
 			case 'P':
 				pause();
 			default:
-				std::cout << "Command not found" << std::endl; 
+				std::cout << "Command not found: \'" << command <<"\'"  << std::endl; 
 				break;
 		}
 		m_commandsQueue.pop_front();
