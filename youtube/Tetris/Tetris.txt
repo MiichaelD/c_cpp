@@ -1,0 +1,12 @@
+
+1) There is a bug when a piece is in a negative column (if the left side of the piece's matrix is 0) and we rotate it, we might lose some cells going out of the board:
+
+	Before rotating a piece check if its in a negative column, if so, try to move it to the right and then rotate, if not, we are not able to rotate!
+
+Note: this same bug happens on the right side of the board.
+
+
+2) Board should be clearing it's lines each tick, instead of having the Game class taking care of it. Also board should have a pointer to a "LinesClearedListener" (or think of a better name) interface, so each time the board clears any amount of lines it let the listerner know that such event happen. 
+
+
+3) Add a nicer UI instead of just the terminal. Also improve the terminal controls.
