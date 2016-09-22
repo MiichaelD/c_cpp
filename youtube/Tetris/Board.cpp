@@ -142,8 +142,23 @@ bool Board::movePieceRight(){
 }
 
 void Board::rotatePiece(bool clockwise){
-	if(curPiece)
+	if(curPiece){
 		curPiece->rotate(clockwise);
+
+		// fix for cases where the piece is out of board bounds
+		// when we rotate them they should be moved to be fully
+		// inside of board's boundaries.
+		int col = curPiece->getCol();
+		if (col < 0){
+			curPiece->moveRight(-col);
+		} else {
+			int size = curPiece->getSize();
+			int lastCell = col + size;
+			if (lastCell > cols){
+				curPiece->moveLeft(lastCell - cols);
+			}
+		}
+	}
 }
 
 bool Board::importPiece(){
