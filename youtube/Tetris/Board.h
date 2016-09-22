@@ -25,6 +25,7 @@ private:
 
 	bool doesPieceFit() const;
 	bool importPiece();
+	void clearRow(int row);
 
 public:
 	Board(){//:Board(cols,rows){
@@ -43,6 +44,7 @@ public:
 	bool tick();
 	void print();
 	void restart();
+	uint32_t clearLines();
 
 	bool canMovePieceDown() const;
 	bool movePieceDown();

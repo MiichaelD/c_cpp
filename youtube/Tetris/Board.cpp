@@ -168,16 +168,60 @@ bool Board::importPiece(){
 }
 
 bool Board::tick(){
-	if (movePieceDown()){
-		return true;
-	} else {
+	bool result = true;
+
+	if (!movePieceDown()){
 		if (importPiece()){
 			curPiece = nullptr;
-			return true;
+		} else {
+			// we cannot move down and have no piece
+			result = false;
 		}
 	}
-	// we cannot move down and have no piece
-	return false;
+	return result;
+}
+
+void Board::clearRow(int row){
+	int r = row;
+	int cells = 0;
+	for (; r > 0; --r){
+		cells = 0;
+		for (int c = 0; c < cols ; ++c){
+			matrix[r][c] = matrix[r-1][c];
+			if (matrix[r][c])
+				++cells;
+		}
+
+		if (cells == 0)
+			break;
+	}
+
+	if (r == 0 && cells > 0){
+		for (int c = 0 ; c < cols; ++c)
+			matrix[r][c] = 0;
+	}
+}
+
+uint32_t Board::clearLines(){
+	uint32_t clearedLines = 0;
+	for (int r = rows - 1; r >= 0; --r){
+		int cells = 0;
+		for (int c = 0; c < cols ; ++c){
+			if (matrix[r][c])
+				++cells;
+		}
+		if (cells == cols){
+			++clearedLines;
+			clearRow(r);
+			--r; // repeat this line
+		} else if (cells == 0){
+			break;
+		}
+	}
+
+
+
+	return clearedLines;
 }
 
 void Board::print(){

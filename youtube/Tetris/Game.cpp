@@ -49,6 +49,10 @@ void Game::run(){
 				setGameRunning(false);
 			}
 		}
+		uint32_t cleared = m_board.clearLines();
+		if (cleared){
+			m_score.onLinesCleared(cleared);
+		}
 		print();
 	}
 	std::cout << "\t\t m_thread has finished." << std::endl; 
@@ -56,9 +60,7 @@ void Game::run(){
 
 void Game::print(){
 	m_board.print();
-	// std::cout << std::endl;
 	m_score.print();
-	// std::cout << std::endl;
 	m_piecesQueue.print();
 	std::cout << std::endl << std::endl;
 }
