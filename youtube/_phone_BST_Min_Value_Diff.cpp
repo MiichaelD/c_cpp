@@ -62,15 +62,36 @@ struct Node{
 };
 
 
-shared_ptr<Node> createBST(vector<int> &array, int start, int end){
+shared_ptr<Node> createBSTFromSortedArray(vector<int> &array, int start, int end){
   if (start > end)
     return shared_ptr<Node>(nullptr);
   int mid = (end + start) / 2;
   
   shared_ptr<Node> node(new Node(array[mid]));
-  node->left = createBST(array, start, mid-1);
-  node->right = createBST(array, mid+1, end);
+  node->left = createBSTFromSortedArray(array, start, mid-1);
+  node->right = createBSTFromSortedArray(array, mid+1, end);
   return node;
+}
+
+shared_ptr<Node> insert(shared_ptr<Node> root, int value) {
+  if (!root) 
+    return shared_ptr<Node>(new Node(value));
+  else if (value == root->value)
+    root->value = value;
+  else if (value < root->value)
+    root->left = insert(root->left, value);
+  else  // key > root->key
+    root->right = insert(root->right, value);
+  return root;
+}
+
+shared_ptr<Node> createBSTFromArray(vector<int> &array, int start, int end){
+  shared_ptr<Node> root(new Node(array[start]));
+
+  for (int i = start + 1; i <= end; ++i) {
+    insert(root, array[i]);
+  }
+  return root;
 }
 
 void printInOrder(shared_ptr<Node> root){
@@ -121,8 +142,9 @@ int findMinDiff(shared_ptr<Node> root){
 
 int main(){
   // vector<int> array = {0,1,2,3,4,5,6,7,8,9};
-  vector<int> array = {1,5,7,10,12,18,24};
-  shared_ptr<Node> root = createBST(array, 0, array.size()-1);
+  vector<int> sortedArray = {1,5,7,10,12,18,24};
+  vector<int> array = {10,5,12,1,24,7,18};
+  shared_ptr<Node> root = createBSTFromArray(array, 0, array.size()-1);
   printInOrder(root);
   cout << endl;
   findMinDiff(root);
