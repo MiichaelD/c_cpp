@@ -1,3 +1,31 @@
+/*	
+  Description:  Given a BST, find the minimum value difference between	
+                any two nodes in the BST.	
+   For:          YouTube/Google.	
+   Programmer:   Michael Duarte.	
+   Date:         Aug 26th, 2016.	
+        (5)	
+     /     \	
+    3       8	
+   / \     /  \	
+  2   4   7    9	
+   min diff = (3-2) == 1	
+ f(<5>, MAX_INT, MAX_INT)	
+ f(<3>, 5 - 3 = 2, MAX_INT)	
+  f(<2>, 3 - 2 = 1, MAX_INT)	
+  min = 1	
+ min = min {2 ,1} = 1	
+  f(<4>, (4 - 3) = 1, 1)	
+  min = 1	
+ ....	
+ another example:	
+      10	
+   5       18	
+1    7   11   24	
+   min diff = (11 - 10) == 1	
+*/	
+
+
 #include <iostream>
 #include <string>
 #include <utility>
