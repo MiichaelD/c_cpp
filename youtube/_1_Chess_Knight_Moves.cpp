@@ -20,7 +20,7 @@
 
 using namespace std;
 
-const int BOARD_SIZE = 8;
+const int BOARD_SIZE = 30;
 
 
 struct Coordinate{
@@ -83,7 +83,7 @@ bool isValid(const Coordinate &start, const Coordinate &end){
 	return start.isValid() && start.isNextStepValid(end);
 }
 
-void getValidMoves(const Coordinate &start, deque<Coordinate> &moves){
+void addValidMovesToQueue(const Coordinate &start, deque<Coordinate> &moves){
 	Coordinate coord;
 	for (int i = 0 ; i < 4; ++i){
 			if (i == 0 || i == 3){
@@ -109,21 +109,23 @@ void getValidMoves(const Coordinate &start, deque<Coordinate> &moves){
 
 deque<Coordinate> getValidMoves(const Coordinate &start){
 	deque<Coordinate> moves;
-	getValidMoves(start, moves);
+	addValidMovesToQueue(start, moves);
 	return moves;
 }
 
 void normalizePath(vector<Coordinate> &path){
-	cout << "Normalizing path found ... from " << path.size() << " to: " ; 
+	cout << "Normalizing path found ... from " << path.size() << " to: ";
 	vector<Coordinate> normalized;
 	Coordinate *aux = &path.back();
+	// cout << "Aux: " << aux->toString() << endl;
 	for (auto it = path.rbegin(); it < path.rend(); ++it){
 		if (isValid(*aux, *it) || aux->isSame(*it)){
-			aux = &(*it);
+			// cout << it->toString() << " is next" << endl;
+			aux = &(*it); // update aux to reference previous valid move
 			normalized.push_back(*aux);
 		}
 	}
-	cout << normalized.size() << " ... Finished." << endl; 
+	cout << normalized.size() << ". Finished." << endl; 
 	path = normalized;
 }
 
@@ -151,7 +153,7 @@ vector<Coordinate> getShortestPath(const Coordinate &start, const Coordinate &en
 			return path;
 		}
 
-		getValidMoves(coord, moveQueue);
+		addValidMovesToQueue(coord, moveQueue);
 		moveQueue.pop_front();
 		// cout << endl;
 	}
@@ -167,7 +169,11 @@ void print(const vector<Coordinate> &path){
 }
 
 int main(){
-	Coordinate end(4,4), start(4,5);
+	// Coordinate start(4, 4), end(4, 5); // 4
+	// Coordinate start(0, 0), end(7, 7); // 7
+	// Coordinate start(4, 3), end(0, 0); // 4
+	// Coordinate start(0, 0), end(29, 29); // 21
+	Coordinate start(4, 4), end(5, 5); // 3
 	auto path = getShortestPath(start, end);
 	print(path);
 	return EXIT_SUCCESS;
