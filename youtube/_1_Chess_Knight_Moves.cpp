@@ -173,7 +173,8 @@ int main(){
 	// Coordinate start(0, 0), end(7, 7); // 7
 	// Coordinate start(4, 3), end(0, 0); // 4
 	// Coordinate start(0, 0), end(29, 29); // 21
-	Coordinate start(4, 4), end(5, 5); // 3
+	Coordinate start(4, 4), end(5, 5); // 3 
+	// ^ https://www.geeksforgeeks.org/minimum-steps-reach-target-knight/ off by 2 more than it should
 	auto path = getShortestPath(start, end);
 	print(path);
 	return EXIT_SUCCESS;
