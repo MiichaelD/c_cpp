@@ -1,5 +1,5 @@
 /*
-	Name:	        TreeLevelsSum.cc
+  Name:         TreeLevelsSum.cc
   Description:  Sum up the levels of a tree
   Example:
     Input:
@@ -13,8 +13,8 @@
 
     Output:    3, 16, 19, 8
 
-	Programmer:		Michael Duarte
-	Date:	     		Aug 28, 2018.
+  Programmer:		Michael Duarte
+  Date:	     		Aug 28, 2018.
 */
 
 #include <iostream>
