@@ -36,57 +36,36 @@ void print(const deque<string> &listOfStrings){
   cout << endl;
 }
 
-deque<deque<string>> generateListOfCombinations(const string &inputString) {
-  string output;
-  deque<deque<string>> solutions;
-  for (int i = 0 ; i < inputString.length(); ++i) {
-    solutions.push_back(deque<string>());
-    for (int j = 1; j <= (inputString.length() - i); ++j) {
-      solutions.back().push_back(inputString.substr(i, j));
-    }
-  }
-  return solutions;
-}
-
-void helper2(deque<string> &result, string answer, deque<deque<string>> combinations, int listIndex, int charactersUsed, int target) {
-  if (charactersUsed == combinations[0].size() && target == 0) {
-    cout << "Answer: " << answer << "\t=> " << target << endl;
+void helper(deque<string> &result, const string &input, int target, int charCount, string answer = "") {
+  if (charCount == input.length() && target == 0) {
+    cout << "Answer: " << answer  << " => " << target << endl;
     result.push_back(answer);
-  }
-  else if (charactersUsed < combinations[0].size()) {
-    auto combination = combinations[listIndex];
+  } else if (charCount < input.length()) {
     for (int op = 0 ; op < MAX_OPERATORS; ++op) {
-      for (int i = 0; i < combination.size(); ++ i) {
-        const string &substr = combinations[listIndex][i];
+      for (int i = 1; i <= (input.length() - charCount); ++i) {
+        string substr = input.substr(charCount, i);
         size_t substrLen = substr.length();
-        if (charactersUsed != 0 || op != 0) {
-           answer += OPERATORS[op];
+        string newAnswer = answer;
+        if (charCount != 0 || op != 0) {
+          newAnswer += OPERATORS[op];
         }
-        answer += substr;
-        if (charactersUsed + substrLen > combinations[0].size()) {
-          break;
-        }
+        newAnswer += substr;
         int newTarget = target + (op == 0 ? (- stoi(substr)) : stoi(substr));
-        helper2(result, answer, combinations, listIndex + substrLen, charactersUsed + substrLen , newTarget);
-        for (int i = 0; i <= substrLen; ++i) {
-          answer.pop_back();
-        }
+        helper(result, input, newTarget, charCount + substrLen, newAnswer);
       }
     }
   }
 }
 
 deque<string> findSolutions(const string &inputString, int target) {
-  auto combinations = generateListOfCombinations(inputString);
   deque<string> result;
-  helper2(result, "", combinations, 0, 0, target);
+  helper(result, inputString, target, 0);
   return result;
 }
 
 int main(){
   string str = "123456789";
   int target = 100;
-  auto solutions = findSolutions(str, target);
-  print(solutions);
+  print(findSolutions(str, target));
   return 0;
 } 
