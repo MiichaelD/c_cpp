@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <deque>
 #include <memory>
 
@@ -45,13 +46,14 @@ void helper(deque<string> &result, const string &input, int target, int charCoun
       for (int i = 1; i <= (input.length() - charCount); ++i) {
         string substr = input.substr(charCount, i);
         size_t substrLen = substr.length();
-        string newAnswer = answer;
+        stringstream newAnswer;
+        newAnswer << answer;
         if (charCount != 0 || op != 0) {
-          newAnswer += OPERATORS[op];
+          newAnswer << OPERATORS[op];
         }
-        newAnswer += substr;
+        newAnswer << substr;
         int newTarget = target + (op == 0 ? (- stoi(substr)) : stoi(substr));
-        helper(result, input, newTarget, charCount + substrLen, newAnswer);
+        helper(result, input, newTarget, charCount + substrLen, newAnswer.str());
       }
     }
   }
