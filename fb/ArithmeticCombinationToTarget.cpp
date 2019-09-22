@@ -1,6 +1,6 @@
 /**  
  * Name:        ArithmeticCombinationToTarget.cpp
- * Description: Given a String and an int as Input and a targetUsing standard integer arithmetic 
+ * Description: Given a String and an int as Input and a target, using standard integer arithmetic 
  *              operators +, -, how many different solutions can you find by inserting the operators
  *              between some digits?
  * Example:     INPUT = "123456789". TARGET = 100
@@ -30,10 +30,10 @@ const int MAX_OPERATORS = 2;
 const char OPERATORS[MAX_OPERATORS] = {'+', '-'};
 
 void print(const deque<string> &listOfStrings){
-	for(const string &str : listOfStrings){
-		cout << str << endl;
-	}
-	cout << endl;
+  for(const string &str : listOfStrings){
+    cout << str << endl;
+  }
+  cout << endl;
 }
 
 deque<deque<string>> generateListOfCombinations(const string &inputString) {
@@ -84,9 +84,9 @@ deque<string> findSolutions(const string &inputString, int target) {
 }
 
 int main(){
-	string str = "123456789";
+  string str = "123456789";
   int target = 100;
   auto solutions = findSolutions(str, target);
-	print(solutions);
-	return 0;
+  print(solutions);
+  return 0;
 } 
