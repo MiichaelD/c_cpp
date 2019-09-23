@@ -42,10 +42,10 @@ void helper(deque<string> &result, const string &input, int target, int charCoun
     cout << "Answer: " << answer  << " => " << target << endl;
     result.push_back(answer);
   } else if (charCount < input.length()) {
-      for (int i = 1; i <= (input.length() - charCount); ++i) {
-        string substr = input.substr(charCount, i);
-        size_t substrLen = substr.length();
-       for (int op = 0 ; op < MAX_OPERATORS; ++op) {
+    for (int i = 1; i <= (input.length() - charCount); ++i) {
+      string substr = input.substr(charCount, i);
+      size_t substrLen = substr.length();
+      for (int op = 0 ; op < MAX_OPERATORS; ++op) {
         stringstream newAnswer;
         newAnswer << answer;
         if (charCount != 0 || op != 0) {
