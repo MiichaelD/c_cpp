@@ -43,14 +43,10 @@ int search(const vector<string> &strings, const string &str, int left, int right
 	// cout << "\t\tComparing " <<strings[mid] << " with: " << str << " = " << compareRes << endl;  
 	if (compareRes == 0)
 		return mid;
-
 	if (compareRes < 0){ // mid is before  str, search right
 		return search(strings, str, mid + 1, right);
-	} else {
-		return search(strings, str, left, mid - 1); // search left
 	}
-
-	return -1;
+  return search(strings, str, left, mid - 1); // search left
 }
 
 int search(const vector<string> &strings, const string &str){
@@ -65,7 +61,7 @@ int main() {
 		"major", "", "", "minor", "", "omega","", "", "", "orange","", "", "", "", "", "", 
 		"planet", "", "world", "", "", "zebra"};
 
-	for (const string  &str : {"","abc","abcedario", "alfa", "omega", "zebr", "zebra", "world"}){
+	for (const string  &str : {"","abc","abecedario", "alfa", "omega", "zebr", "zebra", "world"}){
 		int index = search(strings, str);
 		if (index < 0){
 			cout << "Element \'" << str << "\' not found." << endl;
@@ -73,8 +69,6 @@ int main() {
 			cout << "Element \'" << str << "\' was found at index: " << index << endl; 
 		}
 	}
-
-
 	return EXIT_SUCCESS;
 }
 

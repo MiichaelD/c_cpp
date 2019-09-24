@@ -111,7 +111,7 @@ int binarySearch(const Listy &arr, int x){
 }
 
 // Basically a normal binary search but counting "-1" as a big number
-int bookSearch(const Listy &list, int x, int low, int high){
+int bookSearch(const Listy &list, int value, int low, int high){
 	int mid;
 	while (low <= high){
 		mid = (low + high) / 2;
@@ -128,14 +128,14 @@ int bookSearch(const Listy &list, int x, int low, int high){
 }
 
 // Book solution takes O(log(n)) time just as it normally would with a normal array
-int bookSearch(const Listy &list, int x){
+int bookSearch(const Listy &list, int value){
 	int index = 1;
 	// we look for a range of indexes where the value might be growing exponentially
 	// instead of linearly. This will take log(n) time to find the index range
-	for(;list[index] != -1 && list[index < value]; index *= 2);
+	for(;list[index] != -1 && list[index] < value; index *= 2);
 
 	// and log (n) to find the number
-	return bookSearch(list, x, index / 2, index)
+	return bookSearch(list, value, index / 2, index);
 }
 
 void print(const Listy &arr){
@@ -150,7 +150,7 @@ int main() {
 	Listy arr = {1,3,4,5,7,10,14,15,16,19,20,25};
 	print(arr);
 	for (int i : {5, 14, 4, 24, 26}){
-		int index = binarySearch(arr, i);
+		int index = bookSearch(arr, i);
 		if (index < 0){
 			cout << "Element " << i << " not found." << endl;
 		} else {

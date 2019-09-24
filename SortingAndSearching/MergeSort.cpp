@@ -5,11 +5,11 @@
 					"merge" part that does all the heavy lifting.
 
 					The merge method operates by copying all the elements from the target array
-					elements from the target array segment into a helper array, keeping track of
-					where the start of the left and right halves should be (helperLeft and
-					helperRight). We then iterate through helper, copying the smaller element
-					from each half into the target array. At the end, we copy any remaining
-					elements into the target array.
+					segment into a helper array, keeping track of where the start of the left and
+          right halves should be (helperLeft and helperRight).
+          We then iterate through helper, copying the smaller element from each half
+          into the target array. At the end, we copy any remaining elements into the
+          target array.
 
 	Run-time:		O(n log(n)) average and worst case.
 	Space:			O(n) due to auxiliary space used  to merge parts of the array
@@ -45,15 +45,10 @@ void merge(vector<int> &arr, vector<int> &helper, int low, int mid, int high){
 
 	// Iterate through helper array. Compare the left and right half, copying back
 	// the smaller element from the 2 halves into the original array.
-	while (helperLeft <= mid && helperRight <= high){
-		if(helper[helperLeft] <= helper[helperRight]){
-			arr[current] = helper[helperLeft];
-			++helperLeft;
-		} else {
-			arr[current] = helper[helperRight];
-			++helperRight;
-		}
-		++current;
+  while (helperLeft <= mid && helperRight <= high){
+		arr[current++] = (helper[helperLeft] <= helper[helperRight])
+        ? helper[helperLeft++] 
+        : helper[helperRight++];
 	}
 
 	// Copy the rest of the left side of the aray int othe target array
@@ -81,7 +76,6 @@ void mergeSort(vector<int> &arr){
 	int high = arr.size() - 1;
 	mergeSort(arr, helper, 0, high);
 }
-
 
 int main(){
 	// vector<int> arr = {2, 4, 8, 16, 32};

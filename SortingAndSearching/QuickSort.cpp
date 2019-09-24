@@ -42,8 +42,8 @@ void swap(vector<int> &arr, int x, int y){
 int partition(vector<int> &arr, int left, int right){
 	int index = (left+right)/2;
 	int pivot = arr[index];
-	cout << "\tPivot: " << pivot << " at index: " << index <<
-			". left: " << left << ". right: " << right << endl ;  
+	cout << "\tPivot: " << pivot << " at index: " << index;
+  cout << ". left: " << left << ". right: " << right << endl ;  
 	while (left <= right){
 		while (arr[left] < pivot){ 
 			cout << "\t\t" << arr[left] << " @(" << left << ") < " << pivot << endl;  

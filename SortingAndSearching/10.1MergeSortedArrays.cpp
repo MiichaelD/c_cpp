@@ -19,10 +19,9 @@ void mergeSortedArrays(int arrayA[], int lenA, int arrayB[], int lenB) {
 	--lenA;
 	--lenB;
 	for (; lenB >=0 ; --lastInd) {
-		if (lenA >= 0 && arrayA[lenA] > arrayB[lenB])
-			arrayA[lastInd] = arrayA[lenA--];
-		else
-			arrayA[lastInd] = arrayB[lenB--];
+    arrayA[lastInd] = (lenA >= 0 && arrayA[lenA] > arrayB[lenB])
+        ? arrayA[lenA--]
+        : arrayB[lenB--];
 	}
 	// cout << "Stopped with indexes: last: " << lastInd << ". A: " << lenA << ". B: " << lenB<< endl;  
 }
