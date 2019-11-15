@@ -2,7 +2,7 @@
  *  Problem:      CrossingRiver.cc
  *  Programmer:   Michael Duarte
  *  Date:         November 14th 2019
- *  Descroiption: There is a character trying to cross a river, but he can only cross it by stepping
+ *  Description: There is a character trying to cross a river, but he can only cross it by stepping
  *                on stones otherwise they die x.x.
  *                The character can only do 3 different actions:
  *                - Keeping the same speed.
