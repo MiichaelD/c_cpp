@@ -55,22 +55,18 @@ void init(const vector<string> &dict) {
   root->c = WILDCARD;
   for (string word : dict) {
     shared_ptr<Trie> aux = root;
-    if (word.empty()) {
-      aux->isLast = true;
-    } else {
-      for (int i = 0 ; i < word.length(); ++i) {
-        char c = word.at(i);
-        auto &children = aux->children;
-        if (children.find(c) == children.end()) {
-          children[c] = make_shared<Trie>();
-        }
-        aux = children[c];
-        aux->c = c;
+    for (int i = 0 ; i < word.length(); ++i) {
+      char c = word.at(i);
+      auto &children = aux->children;
+      if (children.find(c) == children.end()) {
+        children[c] = make_shared<Trie>();
       }
-      aux->isLast = true;
-      if (longestWordLength < word.length()) {
-        longestWordLength = word.length();
-      }
+      aux = children[c];
+      aux->c = c;
+    }
+    aux->isLast = true;
+    if (longestWordLength < word.length()) {
+      longestWordLength = word.length();
     }
   }
 }
