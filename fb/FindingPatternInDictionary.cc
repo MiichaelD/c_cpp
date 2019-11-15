@@ -8,6 +8,9 @@
  *                - The pattern can be characters or a special WILDCARD (.) which can be replaced by
  *                  any letter.
  *                - Input's characters can be any unicode character.
+ * 
+ *                As follow up, I was asked for big O notation and to come up with the worst case
+ *                scenario I could assign to the dictionary and patterns.
  */
 
 #include <iostream>
@@ -92,7 +95,7 @@ bool helper(const string &pattern, int index, shared_ptr<Trie> node) {
 }
 
 bool find(const string &pattern) {
-  if (!root|| pattern.length() > longestWordLength) {
+  if (!root || pattern.length() > longestWordLength) {
     return false;
   }
   if (pattern.empty()) {
