@@ -1,6 +1,11 @@
 {
   "files.associations": {
     "iosfwd": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "unordered_set": "cpp",
+    "deque": "cpp",
+    "__cxx_version": "cpp",
+    "unordered_map": "cpp",
+    "__locale": "cpp"
   }
 }
