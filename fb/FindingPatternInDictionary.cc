@@ -23,6 +23,7 @@
 using namespace std;
 
 struct Trie {
+  Trie(char cc) : c{cc} {}
   char c;
   unordered_map<char, shared_ptr<Trie>> children;
   bool isLast = false;
@@ -51,18 +52,16 @@ void print(shared_ptr<Trie> root, int level = 0) {
 }
 
 void init(const vector<string> &dict) {
-  root = make_shared<Trie>();
-  root->c = WILDCARD;
+  root = make_shared<Trie>(WILDCARD);
   for (string word : dict) {
     shared_ptr<Trie> aux = root;
     for (int i = 0 ; i < word.length(); ++i) {
       char c = word.at(i);
       auto &children = aux->children;
       if (children.find(c) == children.end()) {
-        children[c] = make_shared<Trie>();
+        children[c] = make_shared<Trie>(c);
       }
       aux = children[c];
-      aux->c = c;
     }
     aux->isLast = true;
     if (longestWordLength < word.length()) {
