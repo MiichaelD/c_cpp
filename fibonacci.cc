@@ -4,13 +4,12 @@
 using namespace std;
 
 int totalLlamadas = 0;
-vector<int> fibs {1};
+vector<int> fibs {0,1};
 
 inline void printDepth(int d) {
   for (int i = 0; i < d; ++i) {
     cout << "  ";
   }
-
 }
 
 int fib(int n, int depth = 0) {
@@ -25,20 +24,19 @@ int fib(int n, int depth = 0) {
 }
 // "Memoization"
 int fibMemo(int n, int depth = 0) {
+  int m = n + 2;
   ++totalLlamadas;
   printDepth(depth);
   cout << n << endl;
   if (n < 1) {
     return 1;
   }
-  if (n < fibs.size()) {
-    return fibs[n];
+  if (m < fibs.size()) {
+    return fibs[m];
   }
   int result = fibMemo(n-1, depth+1) + fibMemo(n-2, depth+1);
-  while (fibs.size() <= n) {fibs.push_back(1);} 
-  fibs[n] = result;
-
-  // printDepth(depth-1); cout << "= " << result << endl; 
+  while (fibs.size() <= m) {fibs.push_back(1);} 
+  fibs[m] = result;
   return result;
 }
 
@@ -51,7 +49,9 @@ void printFibs() {
 
 
 int main () {
-  int n = 5, res = fib(n);
+  int n = 20, res = 0;
+  totalLlamadas = 0;
+  res = fib(n);
   cout << "Fibonacci (" << n << ") = " << res << endl;
   cout << "Llamadas totales: " << totalLlamadas << endl << endl;
   
