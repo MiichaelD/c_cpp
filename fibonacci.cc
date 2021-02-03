@@ -16,27 +16,23 @@ int fib(int n, int depth = 0) {
   ++totalLlamadas;
   printDepth(depth);
   cout << n << endl;
-  if (n < 1) {
-    return 1;
+  if (n <= 1) {
+    return n;
   }
   int result = fib(n-1, depth+1) + fib(n-2, depth+1);
   return result;
 }
 // "Memoization"
 int fibMemo(int n, int depth = 0) {
-  int m = n + 2;
   ++totalLlamadas;
   printDepth(depth);
   cout << n << endl;
-  if (n < 1) {
-    return 1;
-  }
-  if (m < fibs.size()) {
-    return fibs[m];
+  if (n < fibs.size()) {
+    return fibs[n];
   }
   int result = fibMemo(n-1, depth+1) + fibMemo(n-2, depth+1);
-  while (fibs.size() <= m) {fibs.push_back(1);} 
-  fibs[m] = result;
+  while (fibs.size() <= n) { fibs.push_back(1); } 
+  fibs[n] = result;
   return result;
 }
 
@@ -49,7 +45,7 @@ void printFibs() {
 
 
 int main () {
-  int n = 20, res = 0;
+  int n = 8, res = 0;
   totalLlamadas = 0;
   res = fib(n);
   cout << "Fibonacci (" << n << ") = " << res << endl;
