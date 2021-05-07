@@ -6,6 +6,8 @@
     "deque": "cpp",
     "__cxx_version": "cpp",
     "unordered_map": "cpp",
-    "__locale": "cpp"
+    "__locale": "cpp",
+    "iostream": "cpp",
+    "vector": "cpp"
   }
 }
