@@ -41,6 +41,8 @@
 
 using namespace std;
 
+size_t totalCalls = 0;
+
 struct pair_hash {
 	template <class T1, class T2>
 	std::size_t operator () (std::pair<T1, T2> const &pair) const {
@@ -59,6 +61,7 @@ void printIndent(int indentLevel) {
 bool canCrossMemo(
     const vector<bool> &stones, unordered_set<pair<int,int>, pair_hash> &memo, int index = 0,
     int speed = 1) {
+  ++totalCalls;
   if (index >= stones.size()) {
     return true;
   }
@@ -78,6 +81,7 @@ bool canCrossMemo(
 bool canCross(const vector<bool> &stones, int index = 0, int speed = 1, int level = 0) {
   // printIndent(level);
   // cout << "Index: " << index << ", Speed: " << speed << endl;
+  ++totalCalls;
   if (index >= stones.size()) {
     return true;
   }
@@ -97,20 +101,27 @@ bool canCross(const vector<bool> &stones, int index = 0, int speed = 1, int leve
 void printTest(const vector<bool> &test) {
   cout << '|';
   for (bool b : test) {
-    cout << (b ? '_' : ' ');
+    cout << (b ? '_' : '.');
   }
-  cout << '|';
+  cout << '|' << " (Size: " << test.size() << ")";
 }
 
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  vector<vector<bool>> tests = {{1,0,1,0,0,1,0,0,1}, {1,0,1,0,1,0,0,0,1}, {1,1,1,1,1,0,0,0,1}};
+  vector<vector<bool>> tests = {
+    {1,0,1,0,0,1,0,0,1},
+    {1,0,1,0,1,0,0,0,1},
+    {1,1,1,1,1,0,0,0,1},
+    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+  };
   for (const auto &test : tests) {
+    totalCalls = 0;
     printTest(test);
     unordered_set<pair<int,int>, pair_hash> memo;
     cout << (canCrossMemo(test, memo) ? " => Can be crossed" : " => Cannot be crossed") << endl;
-    // cout << endl << (canCross(test) ? " => Can be crossed" : " => Cannot be crossed") << endl;
+    // cout << (canCross(test) ? " => Can be crossed" : " => Cannot be crossed") << endl;
+    // cout << "Total calls: "<< totalCalls << endl;
   }
   return EXIT_SUCCESS;
 }
