@@ -12,9 +12,9 @@
 					  city and given day.
 	
 	Example:		City:    Weather per day: (Sunny o Rainy)
-					  -				0 	1 	2 	3	4	5
-					  0				S 	S 	S 	S 	S 	S
-					  1				R 	S 	R 	S 	R 	R
+					  -		0 	1 	2 	3	4	5
+					  0		S 	S 	S 	S 	S 	S
+					  1		R 	S 	R 	S 	R 	R
 					  2             S 	R 	R 	R 	S 	R
 					  3             S 	S 	S 	S 	S 	S
 
