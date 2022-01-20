@@ -30,14 +30,18 @@ using namespace std;
 const int MAX_OPERATORS = 2;
 const char OPERATORS[MAX_OPERATORS] = {'+', '-'};
 
+int totalCombinations;
+
 void print(const deque<string> &listOfStrings){
   for(const string &str : listOfStrings){
     cout << str << endl;
   }
-  cout << endl;
+  cout << endl << "Total solutions: " << listOfStrings.size();
+  cout << " & total permutaions: " << totalCombinations << endl;
 }
 
 void helper(deque<string> &result, const string &input, int target, int charCount, string answer = "") {
+  ++totalCombinations;
   if (charCount == input.length() && target == 0) {
     cout << "Answer: " << answer  << " => " << target << endl;
     result.push_back(answer);
@@ -60,6 +64,7 @@ void helper(deque<string> &result, const string &input, int target, int charCoun
 }
 
 deque<string> findSolutions(const string &inputString, int target) {
+  totalCombinations = 0;
   deque<string> result;
   helper(result, inputString, target, 0);
   return result;
@@ -68,6 +73,6 @@ deque<string> findSolutions(const string &inputString, int target) {
 int main(){
   string str = "123456789";
   int target = 100;
-  print(findSolutions(str, target));
+  print(findSolutions(str, target)); // complexity: O(3 ^ N) 
   return 0;
 } 
